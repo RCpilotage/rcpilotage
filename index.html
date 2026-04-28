@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 <title>R&C Pilotage | Conseil opérationnel en restauration</title>
 <meta name="description" content="R&C Pilotage accompagne les établissements CHR qui veulent corriger leur désorganisation, améliorer leur rentabilité et retrouver une exploitation maîtrisée."/>
+<meta name="keywords" content="consultant restauration Alsace, pilotage food cost, optimisation restaurant, conseil CHR Bas-Rhin, performance opérationnelle restaurant"/>
+<meta property="og:title" content="R&C Pilotage | Conseil opérationnel en restauration"/>
+<meta property="og:description" content="Diagnostic terrain, optimisation food cost et accompagnement des restaurateurs du Bas-Rhin."/>
+<meta property="og:url" content="https://rcpilotage.fr"/>
+<meta property="og:type" content="website"/>
+<link rel="canonical" href="https://rcpilotage.fr"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
@@ -1243,10 +1249,31 @@ textarea { min-height: 100px; resize: vertical; line-height: 1.6; }
         <textarea id="objectif" name="objectif" required placeholder="Ce que vous souhaitez améliorer ou corriger." style="min-height:80px"></textarea>
       </div>
 
-      <label class="consent">
-        <input type="checkbox" required/>
+      <label class="consent" id="consentLabel" style="cursor:pointer;" onclick="toggleConsent()">
+        <span id="customCheck" style="
+          display:inline-flex;align-items:center;justify-content:center;
+          width:18px;height:18px;min-width:18px;border:2px solid rgba(29,95,138,0.6);
+          border-radius:4px;background:transparent;transition:all 0.2s;margin-top:1px;
+        "></span>
+        <input type="checkbox" id="consentBox" required style="display:none"/>
         <span>J'accepte que les informations transmises soient utilisées pour être recontacté au sujet de ma demande.</span>
       </label>
+      <script>
+      function toggleConsent() {
+        var cb = document.getElementById('consentBox');
+        var box = document.getElementById('customCheck');
+        cb.checked = !cb.checked;
+        if (cb.checked) {
+          box.style.background = '#1D5F8A';
+          box.style.borderColor = '#1D5F8A';
+          box.innerHTML = '<svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1,4.5 4,7.5 10,1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        } else {
+          box.style.background = 'transparent';
+          box.style.borderColor = 'rgba(29,95,138,0.6)';
+          box.innerHTML = '';
+        }
+      }
+      </script>
 
       <button type="submit" class="btn btn-gold">
         Envoyer ma demande
