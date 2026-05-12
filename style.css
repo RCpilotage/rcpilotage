@@ -548,12 +548,35 @@ textarea { min-height: 100px; resize: vertical; line-height: 1.6; }
   -webkit-user-select: none;
 }
 .check-item:hover { border-color: var(--goldline); background: var(--surf2); }
+
+/* Hide native checkbox, use custom box */
 .check-item input[type="checkbox"] {
-  width: 16px; height: 16px;
-  min-width: 16px;
-  accent-color: var(--gold);
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  min-width: 18px;
+  border: 2px solid rgba(29,95,138,0.5);
+  border-radius: 4px;
+  background: transparent;
   cursor: pointer;
+  position: relative;
+  transition: background 0.15s, border-color 0.15s;
   pointer-events: auto;
+  flex-shrink: 0;
+}
+.check-item input[type="checkbox"]:checked {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.check-item input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 3px; top: 0px;
+  width: 5px; height: 9px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
 }
 .check-item:has(input:checked) {
   border-color: var(--gold);
@@ -633,7 +656,10 @@ textarea { min-height: 100px; resize: vertical; line-height: 1.6; }
 }
 
 @media (min-width: 1024px) {
-  .page { max-width: 900px; padding: 72px 0; }
+  html, body { overflow: hidden; height: 100%; }
+  .pages-container { position: fixed; top: var(--nav-h); bottom: var(--tab-h); overflow: hidden; }
+  .page { position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden; max-width: 100%; padding: 40px 80px; }
+  .page > * { max-width: 900px; margin-left: auto; margin-right: auto; }
   h1.page-title { font-size: 3.2rem; }
   .nav-cards { grid-template-columns: repeat(4, 1fr); }
 }
