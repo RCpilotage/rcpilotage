@@ -126,6 +126,12 @@ a { color: inherit; text-decoration: none; }
   pointer-events: none;
 }
 
+/* ═══ PAGE INNER WRAPPER ═══ */
+.page-inner {
+  width: 100%;
+}
+
+
 /* ═══ TABBAR ═══ */
 .tabbar {
   position: fixed;
@@ -549,40 +555,33 @@ textarea { min-height: 100px; resize: vertical; line-height: 1.6; }
 }
 .check-item:hover { border-color: var(--goldline); background: var(--surf2); }
 
-/* Hide native checkbox, use custom box */
+/* Custom checkbox */
 .check-item input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 18px; height: 18px;
-  min-width: 18px;
+  display: none;
+}
+.check-box-icon {
+  width: 20px; height: 20px;
+  min-width: 20px;
   border: 2px solid rgba(29,95,138,0.5);
-  border-radius: 4px;
+  border-radius: 5px;
   background: transparent;
-  cursor: pointer;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: background 0.15s, border-color 0.15s;
-  pointer-events: auto;
   flex-shrink: 0;
 }
-.check-item input[type="checkbox"]:checked {
+.check-box-icon svg { display: none; }
+.check-item:has(input:checked) {
+  border-color: var(--gold);
+  background: rgba(29,95,138,0.18);
+  color: var(--white);
+}
+.check-item:has(input:checked) .check-box-icon {
   background: var(--gold);
   border-color: var(--gold);
 }
-.check-item input[type="checkbox"]:checked::after {
-  content: "";
-  position: absolute;
-  left: 3px; top: 0px;
-  width: 5px; height: 9px;
-  border: 2px solid #fff;
-  border-top: none;
-  border-left: none;
-  transform: rotate(45deg);
-}
-.check-item:has(input:checked) {
-  border-color: var(--gold);
-  background: rgba(29,95,138,0.15);
-  color: var(--white);
-}
+.check-item:has(input:checked) .check-box-icon svg { display: block; }
 
 .consent {
   display: flex;
@@ -640,9 +639,8 @@ textarea { min-height: 100px; resize: vertical; line-height: 1.6; }
     transform: translateX(-60px); 
     pointer-events: none; 
   }
-  /* Content width limit */
-  .page > * { max-width: 760px; margin-left: auto; margin-right: auto; }
-  .page > .progress-dots { margin-left: auto; margin-right: auto; }
+  /* Content wrapper centered */
+  .page-inner { max-width: 760px; margin: 0 auto; }
   .tab { flex-direction: row; gap: 8px; }
   .tab span { font-size: 0.85rem; }
   .tab svg { width: 18px; height: 18px; }
@@ -659,7 +657,7 @@ textarea { min-height: 100px; resize: vertical; line-height: 1.6; }
   html, body { overflow: hidden; height: 100%; }
   .pages-container { position: fixed; top: var(--nav-h); bottom: var(--tab-h); overflow: hidden; }
   .page { position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden; max-width: 100%; padding: 40px 80px; }
-  .page > * { max-width: 900px; margin-left: auto; margin-right: auto; }
+  .page-inner { max-width: 900px; }
   h1.page-title { font-size: 3.2rem; }
   .nav-cards { grid-template-columns: repeat(4, 1fr); }
 }
