@@ -136,3 +136,17 @@ function validateAndSubmit() {
     document.getElementById('contactForm').submit();
   }
 }
+
+// Fix mouse wheel scroll - forward wheel events from container to active page
+document.addEventListener('DOMContentLoaded', function() {
+  const container = document.getElementById('pagesContainer');
+  if (!container) return;
+  
+  container.addEventListener('wheel', function(e) {
+    const activePage = document.querySelector('.page.active');
+    if (activePage) {
+      activePage.scrollTop += e.deltaY;
+      e.preventDefault();
+    }
+  }, { passive: false });
+});
