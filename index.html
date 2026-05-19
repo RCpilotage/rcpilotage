@@ -2,12 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/>
-<link rel="icon" type="image/x-icon" href="favicon.ico"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-
-<!-- ✅ REDIRECTION FORCÉE VERS HTTPS -->
-
-
 <title>R&C Pilotage | Conseil opérationnel en restauration</title>
 <meta name="description" content="R&C Pilotage accompagne les établissements CHR qui veulent corriger leur désorganisation, améliorer leur rentabilité et retrouver une exploitation maîtrisée."/>
 <meta name="keywords" content="consultant restauration Alsace, pilotage food cost, optimisation restaurant, conseil CHR Bas-Rhin, performance opérationnelle restaurant"/>
@@ -18,25 +13,783 @@
 <link rel="canonical" href="https://rcpilotage.fr"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <link rel="icon" type="image/x-icon" href="favicon.ico"/>
 <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
-<link rel="stylesheet" href="style.css"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #0a0b0d;
+  --bg2:     #0f1114;
+  --surface: #13161a;
+  --surf2:   #1a1e24;
+  --border:  rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.11);
+  --text:    #c8cdd6;
+  --muted:   #6b7585;
+  --gold:    #c9a96e;
+  --gold2:   #a8813e;
+  --golddim: rgba(201,169,110,0.08);
+  --goldline:rgba(201,169,110,0.22);
+  --white:   #eef0f3;
+  --nav-h:   64px;
+  --tab-h:   68px;
+  --serif:   'Cormorant Garamond', Georgia, serif;
+  --sans:    'Outfit', sans-serif;
+  --ease:    cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out:cubic-bezier(0.0, 0, 0.2, 1);
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ══════════════════════ NAV ══════════════════════ */
+.topnav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: rgba(10,11,13,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 200;
+}
+
+.logo-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-img {
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: opacity 0.2s;
+}
+.logo-wordmark {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--white);
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+.logo-wordmark em {
+  color: var(--gold);
+  font-style: normal;
+}
+.logo-sub {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+.nav-cta {
+  background: transparent;
+  color: var(--gold);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 8px 18px;
+  border-radius: 2px;
+  border: 1px solid var(--goldline);
+  cursor: pointer;
+  font-family: var(--sans);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--golddim); }
+.nav-cta:active { transform: scale(0.97); }
+
+/* ══════════════════════ PAGE ENGINE ══════════════════════ */
+.pages-container {
+  position: fixed;
+  top: var(--nav-h);
+  bottom: var(--tab-h);
+  left: 0; right: 0;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.page {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  padding: 36px 22px 40px;
+  opacity: 0;
+  transform: translateX(48px);
+  transition: opacity 0.36s var(--ease), transform 0.36s var(--ease);
+  pointer-events: none;
+}
+
+.page.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: all;
+}
+
+.page.exit-left {
+  opacity: 0;
+  transform: translateX(-48px);
+  pointer-events: none;
+}
+
+.page-inner { width: 100%; }
+
+/* ══════════════════════ TABBAR ══════════════════════ */
+.tabbar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: var(--tab-h);
+  background: rgba(10,11,13,0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: stretch;
+  z-index: 200;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  transition: color 0.2s;
+  padding: 8px 4px;
+  font-family: var(--sans);
+  -webkit-tap-highlight-color: transparent;
+}
+.tab.active { color: var(--gold); }
+.tab svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.tab span { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; line-height: 1; }
+
+.tab-indicator {
+  position: absolute;
+  top: 0; height: 1px;
+  background: var(--gold);
+  transition: left 0.36s var(--ease), width 0.36s var(--ease);
+}
+
+/* ══════════════════════ TYPOGRAPHY ══════════════════════ */
+.overline {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+}
+
+h1.hero-title {
+  font-family: var(--serif);
+  font-size: 2.35rem;
+  color: var(--white);
+  line-height: 1.08;
+  font-weight: 300;
+  margin-bottom: 20px;
+  letter-spacing: -0.3px;
+}
+h1.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+  font-weight: 300;
+}
+h1.hero-title strong {
+  font-weight: 500;
+  font-style: normal;
+}
+
+h2.section-title {
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  color: var(--white);
+  line-height: 1.1;
+  font-weight: 300;
+  margin-bottom: 16px;
+  letter-spacing: -0.2px;
+}
+h2.section-title em { font-style: italic; color: var(--gold); }
+
+h3 {
+  font-family: var(--sans);
+  font-size: 0.94rem;
+  font-weight: 500;
+  color: var(--white);
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.lead {
+  font-size: 0.93rem;
+  color: var(--muted);
+  line-height: 1.75;
+  font-weight: 300;
+  margin-bottom: 28px;
+  letter-spacing: 0.1px;
+}
+
+.sep { height: 1px; background: var(--border); margin: 28px 0; }
+.sep-gold { height: 1px; background: linear-gradient(90deg, var(--gold) 0%, transparent 60%); margin: 28px 0; width: 80px; }
+
+.page-bottom { height: 20px; }
+
+/* ══════════════════════ BUTTONS ══════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border-radius: 2px;
+  font-weight: 500;
+  font-size: 0.88rem;
+  border: none;
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: all 0.2s;
+  width: 100%;
+  letter-spacing: 0.5px;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:active { transform: scale(0.99); }
+
+.btn-gold {
+  background: var(--gold);
+  color: #0a0b0d;
+  font-weight: 600;
+}
+.btn-gold:hover { background: #d9ba82; }
+
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border2);
+}
+.btn-outline:hover { border-color: var(--goldline); color: var(--white); }
+
+/* ══════════════════════ PROGRESS DOTS ══════════════════════ */
+.progress-dots { display: flex; gap: 5px; margin-bottom: 28px; }
+.pdot { width: 5px; height: 5px; border-radius: 50%; background: var(--border2); transition: background 0.25s, width 0.25s; }
+.pdot.active { background: var(--gold); width: 20px; border-radius: 2.5px; }
+
+/* ══════════════════════ HERO ══════════════════════ */
+.hero-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border2);
+  border: 1px solid var(--border2);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+.hero-kpi {
+  background: var(--bg2);
+  padding: 16px 10px;
+  text-align: center;
+}
+.hero-kpi-val {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--gold);
+  display: block;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.hero-kpi-label {
+  font-size: 0.66rem;
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  display: block;
+  line-height: 1.3;
+}
+
+.hero-axiom {
+  border-left: 2px solid var(--gold);
+  padding: 12px 16px;
+  margin-bottom: 28px;
+  background: var(--golddim);
+}
+.hero-axiom p {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.5;
+  font-weight: 300;
+}
+
+.nav-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 8px;
+}
+.nav-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 16px 14px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.nav-card:hover { border-color: var(--goldline); background: var(--surf2); }
+.nav-card:active { transform: scale(0.98); }
+.nc-icon {
+  width: 28px; height: 28px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 6px;
+}
+.nc-icon svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.nav-card h4 { color: var(--white); font-size: 0.85rem; font-weight: 500; }
+.nav-card p { color: var(--muted); font-size: 0.72rem; line-height: 1.4; }
+.nav-card .arrow { color: var(--gold); font-size: 0.75rem; margin-top: 6px; opacity: 0.7; }
+
+/* ══════════════════════ PROBLEM CARDS ══════════════════════ */
+.prob-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+
+.prob-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--border);
+  border-radius: 2px;
+  padding: 18px 18px 18px 20px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  transition: border-left-color 0.2s, background 0.2s;
+}
+.prob-card:hover { border-left-color: var(--gold); background: var(--surf2); }
+
+.prob-icon-wrap {
+  width: 32px; height: 32px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.prob-icon-wrap svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; opacity: 0.85; }
+
+.prob-card h3 { color: var(--white); font-size: 0.9rem; font-weight: 500; margin-bottom: 5px; line-height: 1.3; }
+.prob-card p { color: var(--muted); font-size: 0.82rem; line-height: 1.6; font-weight: 300; }
+
+/* ══════════════════════ SERVICES ══════════════════════ */
+.service-grid { display: flex; flex-direction: column; gap: 0; }
+
+.service-card {
+  border-top: 1px solid var(--border);
+  padding: 22px 0;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  transition: background 0.2s;
+  cursor: default;
+}
+.service-card:last-child { border-bottom: 1px solid var(--border); }
+
+.service-num {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  color: rgba(201,169,110,0.25);
+  font-weight: 300;
+  flex-shrink: 0;
+  width: 32px;
+  line-height: 1;
+  padding-top: 3px;
+}
+
+.service-content { flex: 1; }
+.service-content h3 { color: var(--white); font-size: 0.93rem; font-weight: 500; margin-bottom: 7px; }
+.service-content p { color: var(--muted); font-size: 0.83rem; line-height: 1.65; font-weight: 300; }
+
+.service-tag {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 3px 9px;
+  border-radius: 1px;
+  background: var(--golddim);
+  border: 1px solid var(--goldline);
+  color: var(--gold);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+/* Outcomes */
+.outcome-row {
+  display: flex;
+  gap: 0;
+  margin-top: 4px;
+}
+.outcome-item {
+  flex: 1;
+  padding: 18px 14px;
+  border-right: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.outcome-item:first-child { border-left: 1px solid var(--border); border-radius: 2px 0 0 2px; }
+.outcome-item:last-child { border-right: 1px solid var(--border); border-radius: 0 2px 2px 0; }
+.outcome-letter {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  color: var(--gold);
+  font-style: italic;
+  font-weight: 300;
+  display: block;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.outcome-item h3 { font-size: 0.82rem; font-weight: 500; color: var(--white); margin-bottom: 5px; }
+.outcome-item p { font-size: 0.75rem; color: var(--muted); line-height: 1.5; font-weight: 300; }
+
+/* ══════════════════════ TIMELINE / MÉTHODE ══════════════════════ */
+.timeline { position: relative; padding-left: 26px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px; top: 16px; bottom: 16px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--goldline) 0%, var(--border) 100%);
+}
+
+.tl-item {
+  position: relative;
+  margin-bottom: 28px;
+}
+.tl-item:last-child { margin-bottom: 0; }
+
+.tl-dot {
+  position: absolute;
+  left: -22px;
+  top: 4px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold);
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tl-dot-inner {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.7;
+}
+.tl-step {
+  font-size: 0.63rem;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.7;
+  margin-bottom: 5px;
+}
+.tl-item h3 { color: var(--white); font-size: 0.93rem; font-weight: 500; margin-bottom: 6px; }
+.tl-item p { color: var(--muted); font-size: 0.83rem; line-height: 1.65; font-weight: 300; }
+
+/* Why cards */
+.why-card {
+  padding: 22px 0;
+  border-top: 1px solid var(--border);
+}
+.why-card:last-of-type { border-bottom: 1px solid var(--border); }
+.why-card h3 { color: var(--white); font-size: 0.93rem; font-weight: 500; margin-bottom: 8px; }
+.why-card p { color: var(--muted); font-size: 0.84rem; line-height: 1.65; font-weight: 300; }
+
+/* About block */
+.about-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 24px 22px;
+  position: relative;
+  overflow: hidden;
+}
+.about-block::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--gold);
+}
+.about-block p {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.75;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+.about-block p:last-child { margin-bottom: 0; }
+.about-block strong { color: var(--white); font-weight: 500; }
+
+/* ══════════════════════ STATS BAR ══════════════════════ */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.stat-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 16px;
+  text-align: left;
+}
+.stat-val {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--gold);
+  display: block;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label { font-size: 0.72rem; font-weight: 400; color: var(--muted); letter-spacing: 0.3px; }
+
+/* ══════════════════════ FORM ══════════════════════ */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 28px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.contact-info-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.contact-info-row:last-child { border-bottom: none; }
+.ci-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  width: 80px;
+  flex-shrink: 0;
+}
+.ci-val { font-size: 0.88rem; color: var(--text); }
+.ci-val a { color: var(--gold); }
+
+.fg {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 14px;
+}
+label { font-size: 0.78rem; color: var(--muted); font-weight: 400; letter-spacing: 0.2px; }
+input, select, textarea {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 2px;
+  color: var(--white);
+  font-size: 0.9rem;
+  font-family: var(--sans);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b7585' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+select option { background: #13161a; }
+input:focus, select:focus, textarea:focus {
+  border-color: rgba(201,169,110,0.4);
+  box-shadow: 0 0 0 3px rgba(201,169,110,0.06);
+}
+textarea { min-height: 90px; resize: vertical; line-height: 1.6; }
+input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.6; }
+
+.checkbox-group { display: flex; flex-direction: column; gap: 7px; margin-top: 8px; }
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.86rem;
+  color: var(--text);
+  cursor: pointer;
+  padding: 9px 12px;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: border-color 0.15s, background 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.check-item:hover { border-color: var(--goldline); background: var(--surf2); }
+.check-item input[type="checkbox"] { display: none; }
+.check-box-icon {
+  width: 18px; height: 18px; min-width: 18px;
+  border: 1.5px solid var(--border2);
+  border-radius: 2px;
+  background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.check-box-icon svg { display: none; }
+.check-item:has(input:checked) { border-color: var(--goldline); background: var(--golddim); color: var(--white); }
+.check-item:has(input:checked) .check-box-icon { background: var(--gold); border-color: var(--gold); }
+.check-item:has(input:checked) .check-box-icon svg { display: block; }
+
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  margin-bottom: 18px;
+}
+
+/* ══════════════════════ DESKTOP ══════════════════════ */
+@media (min-width: 768px) {
+  html, body { overflow: hidden; height: 100%; }
+  .page { padding: 44px 64px 44px; position: absolute; inset: 0; overflow-y: auto; }
+  .page-inner { max-width: 760px; margin: 0 auto; }
+  .tab { flex-direction: row; gap: 7px; }
+  .tab span { font-size: 0.72rem; }
+  h1.hero-title { font-size: 3rem; }
+  h2.section-title { font-size: 2.3rem; }
+  .nav-cards { grid-template-columns: repeat(4, 1fr); }
+  .prob-grid { grid-template-columns: 1fr 1fr; }
+  .stats-bar { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 1100px) {
+  .page { padding: 48px 80px; }
+  .page-inner { max-width: 900px; }
+  h1.hero-title { font-size: 3.4rem; }
+}
+
+/* ══════════════════════ ANIMATIONS ══════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page.active .page-inner > * {
+  animation: fadeUp 0.45s var(--ease) both;
+}
+.page.active .page-inner > *:nth-child(1) { animation-delay: 0.03s; }
+.page.active .page-inner > *:nth-child(2) { animation-delay: 0.08s; }
+.page.active .page-inner > *:nth-child(3) { animation-delay: 0.13s; }
+.page.active .page-inner > *:nth-child(4) { animation-delay: 0.18s; }
+.page.active .page-inner > *:nth-child(5) { animation-delay: 0.22s; }
+.page.active .page-inner > *:nth-child(6) { animation-delay: 0.26s; }
+.page.active .page-inner > *:nth-child(7) { animation-delay: 0.30s; }
+.page.active .page-inner > *:nth-child(8) { animation-delay: 0.34s; }
+.page.active .page-inner > *:nth-child(9) { animation-delay: 0.38s; }
+
+/* Quote block */
+.quote-block {
+  border-left: 2px solid var(--gold);
+  padding: 14px 18px;
+  background: var(--golddim);
+  margin-bottom: 28px;
+}
+.quote-block p {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.55;
+  font-weight: 300;
+}
+
+/* Footer */
+.footer-note {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--muted);
+  opacity: 0.7;
+}
+.footer-note a { color: var(--muted); }
+</style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ═══════════ NAV ═══════════ -->
 <header class="topnav">
-  <button class="logo-btn" onclick="goTo('accueil')" aria-label="Retour à l'accueil"><img src="logo.png" alt="RC Pilotage" class="logo-img"/></button>
-  <button class="nav-cta" onclick="goTo('contact')">Prendre contact</button>
+  <button class="logo-btn" onclick="goTo('accueil')" aria-label="Retour à l'accueil">
+    <img src="logo.png" alt="R&C Pilotage" class="logo-img"/>
+    <div>
+      <div class="logo-wordmark">R<em>&</em>C Pilotage</div>
+      <span class="logo-sub">Conseil opérationnel</span>
+    </div>
+  </button>
+  <button class="nav-cta" onclick="goTo('contact')">Contact</button>
 </header>
 
-<!-- PAGES -->
+<!-- ═══════════ PAGES ═══════════ -->
 <div class="pages-container" id="pagesContainer">
 <div class="page-inner">
-  <!-- PAGE 1 : ACCUEIL -->
+
+  <!-- ▌ PAGE 1 : ACCUEIL ▌ -->
   <div class="page active" id="page-accueil" data-page="accueil">
-<div class="page-inner">
+  <div class="page-inner">
     <div class="progress-dots">
       <div class="pdot active" data-for="accueil"></div>
       <div class="pdot" data-for="problemes"></div>
@@ -44,47 +797,70 @@
       <div class="pdot" data-for="methode"></div>
       <div class="pdot" data-for="contact"></div>
     </div>
-    <div class="hero-badge"><span></span>Conseil opérationnel · CHR</div>
-    <h1 class="page-title">Votre établissement tourne. Mais est-il vraiment <em>piloté ?</em></h1>
+
+    <div class="overline">Conseil opérationnel · CHR</div>
+
+    <h1 class="hero-title">Votre établissement tourne.<br>Mais est-il vraiment <em>piloté ?</em></h1>
+
     <p class="lead">J'accompagne les restaurants et brasseries qui veulent corriger ce qui freine leur performance — organisation floue, pertes invisibles, exécution irrégulière.</p>
-    <div class="quote-bar">Un établissement ne se subit pas. Il se pilote.</div>
-    <div class="hero-stat-row">
-      <div class="hero-stat"><strong>Terrain</strong><small>Pas de théorie</small></div>
-      <div class="hero-stat"><strong>Concret</strong><small>Actions précises</small></div>
-      <div class="hero-stat"><strong>Lucide</strong><small>Sans complaisance</small></div>
+
+    <div class="hero-kpi-row">
+      <div class="hero-kpi">
+        <span class="hero-kpi-val">Terrain</span>
+        <span class="hero-kpi-label">Pas de théorie</span>
+      </div>
+      <div class="hero-kpi">
+        <span class="hero-kpi-val">Concret</span>
+        <span class="hero-kpi-label">Actions précises</span>
+      </div>
+      <div class="hero-kpi">
+        <span class="hero-kpi-val">Lucide</span>
+        <span class="hero-kpi-label">Sans complaisance</span>
+      </div>
     </div>
+
+    <div class="hero-axiom">
+      <p>Un établissement ne se subit pas. Il se pilote.</p>
+    </div>
+
     <button class="btn btn-gold" onclick="goTo('contact')" style="margin-bottom:12px">
       Exposer ma situation
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </button>
-    <button class="btn btn-outline" onclick="goTo('problemes')">Voir si ça vous ressemble →</button>
+    <button class="btn btn-outline" onclick="goTo('problemes')" style="margin-bottom:28px">Voir si ça vous ressemble →</button>
+
     <div class="sep"></div>
-    <p style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;font-weight:600;">Explorer le site</p>
+    <p style="font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;font-weight:500;">Explorer</p>
+
     <div class="nav-cards">
       <div class="nav-card" onclick="goTo('problemes')">
         <div class="nc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-        <h4>Constat</h4><p>Vous reconnaissez-vous ?</p><div class="arrow">→</div>
+        <h4>Constat</h4><p>Vous reconnaissez-vous ?</p>
+        <div class="arrow">→</div>
       </div>
       <div class="nav-card" onclick="goTo('services')">
         <div class="nc-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-        <h4>Services</h4><p>Ce que j'apporte</p><div class="arrow">→</div>
+        <h4>Services</h4><p>Ce que j'apporte</p>
+        <div class="arrow">→</div>
       </div>
       <div class="nav-card" onclick="goTo('methode')">
         <div class="nc-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-        <h4>Méthode</h4><p>Comment ça marche</p><div class="arrow">→</div>
+        <h4>Méthode</h4><p>Comment ça marche</p>
+        <div class="arrow">→</div>
       </div>
       <div class="nav-card" onclick="goTo('contact')">
         <div class="nc-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-        <h4>Contact</h4><p>Premier échange</p><div class="arrow">→</div>
+        <h4>Contact</h4><p>Premier échange</p>
+        <div class="arrow">→</div>
       </div>
     </div>
-</div>
     <div class="page-bottom"></div>
   </div>
+  </div>
 
-  <!-- PAGE 2 : PROBLÈMES -->
+  <!-- ▌ PAGE 2 : PROBLÈMES ▌ -->
   <div class="page" id="page-problemes" data-page="problemes">
-<div class="page-inner">
+  <div class="page-inner">
     <div class="progress-dots">
       <div class="pdot" data-for="accueil"></div>
       <div class="pdot active" data-for="problemes"></div>
@@ -92,47 +868,67 @@
       <div class="pdot" data-for="methode"></div>
       <div class="pdot" data-for="contact"></div>
     </div>
-    <div class="label">Constat</div>
-    <h2 class="section-title">Vous reconnaissez-vous dans l'un de ces cas ?</h2>
-    <p class="lead">Un établissement peut être ouvert, actif, fréquenté — et pourtant mal piloté. Les problèmes s'installent progressivement et finissent par coûter cher.</p>
+    <div class="overline">Constat</div>
+    <h2 class="section-title">Vous reconnaissez-vous <em>ici ?</em></h2>
+    <p class="lead">Un établissement peut être ouvert, actif, fréquenté — et pourtant mal piloté. Les problèmes s'installent progressivement.</p>
 
-    <div style="display:grid;grid-template-columns:1fr;gap:10px">
+    <div class="prob-grid">
       <div class="prob-card">
-        <div class="prob-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
-        <div><h3>L'organisation repose sur les individus</h3><p>Quand une personne clé est absente, tout vacille. Aucune répartition claire des tâches.</p></div>
+        <div class="prob-icon-wrap"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+        <div>
+          <h3>Organisation portée par les individus</h3>
+          <p>Quand une personne clé est absente, tout vacille. Aucune répartition claire des tâches.</p>
+        </div>
       </div>
       <div class="prob-card">
-        <div class="prob-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-        <div><h3>On pilote au ressenti</h3><p>Peu d'indicateurs fiables, peu de repères. On avance sans vraiment décider.</p></div>
+        <div class="prob-icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <div>
+          <h3>On pilote au ressenti</h3>
+          <p>Peu d'indicateurs fiables. On avance sans vraiment décider.</p>
+        </div>
       </div>
       <div class="prob-card">
-        <div class="prob-icon"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg></div>
-        <div><h3>Les mêmes problèmes reviennent</h3><p>Mêmes erreurs, mêmes tensions, mêmes pertes. On corrige en surface, les causes demeurent.</p></div>
+        <div class="prob-icon-wrap"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg></div>
+        <div>
+          <h3>Les mêmes problèmes reviennent</h3>
+          <p>On corrige en surface. Les causes profondes demeurent.</p>
+        </div>
       </div>
       <div class="prob-card">
-        <div class="prob-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-        <div><h3>La rentabilité reste floue</h3><p>Le CA est là, mais la marge reste difficile à lire. Le food cost dérive. Les pertes s'accumulent.</p></div>
+        <div class="prob-icon-wrap"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div>
+          <h3>La rentabilité reste floue</h3>
+          <p>Le food cost dérive. Les pertes s'accumulent sans être vues.</p>
+        </div>
       </div>
       <div class="prob-card">
-        <div class="prob-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-        <div><h3>Les équipes manquent de cadre</h3><p>Pas de standards clairs, pas de procédures stables. Le service varie selon qui est là.</p></div>
+        <div class="prob-icon-wrap"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+        <div>
+          <h3>Les équipes manquent de cadre</h3>
+          <p>Pas de standards. Le service varie selon qui est là.</p>
+        </div>
       </div>
       <div class="prob-card">
-        <div class="prob-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
-        <div><h3>On ne voit plus ses propres angles morts</h3><p>Quand on est dedans, on gère. Mais ce qu'on ne voit plus continue de coûter.</p></div>
+        <div class="prob-icon-wrap"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div>
+          <h3>Les angles morts invisibles</h3>
+          <p>Quand on est dedans, on gère. Ce qu'on ne voit plus continue de coûter.</p>
+        </div>
       </div>
     </div>
 
     <div class="sep"></div>
-    <div class="quote-bar">Si vous vous reconnaissez dans l'un de ces points, un regard externe vous serait probablement utile.</div>
+    <div class="quote-block">
+      <p>Si vous vous reconnaissez dans l'un de ces points, un regard externe vous serait probablement utile.</p>
+    </div>
     <button class="btn btn-gold" onclick="goTo('services')">Voir ce que j'apporte →</button>
     <div class="page-bottom"></div>
   </div>
-</div>
+  </div>
 
-  <!-- PAGE 3 : SERVICES -->
+  <!-- ▌ PAGE 3 : SERVICES ▌ -->
   <div class="page" id="page-services" data-page="services">
-<div class="page-inner">
+  <div class="page-inner">
     <div class="progress-dots">
       <div class="pdot" data-for="accueil"></div>
       <div class="pdot" data-for="problemes"></div>
@@ -140,32 +936,91 @@
       <div class="pdot" data-for="methode"></div>
       <div class="pdot" data-for="contact"></div>
     </div>
-    <div class="label">Services</div>
-    <h2 class="section-title">Des interventions ciblées sur les vrais points de friction.</h2>
-    <p class="lead">Chaque intervention est adaptée à la réalité de l'établissement. Pas de modèle préformaté plaqué sur une situation qu'on n'a pas pris le temps de comprendre.</p>
+    <div class="overline">Services</div>
+    <h2 class="section-title">Des interventions ciblées sur les <em>vrais points de friction.</em></h2>
+    <p class="lead">Chaque mission est adaptée à la réalité de l'établissement. Pas de modèle préformaté.</p>
 
-    <div class="card"><div class="card-num">01</div><h3>Diagnostic opérationnel</h3><p>Analyse du fonctionnement réel : organisation, fluidité, répartition des tâches, points de rupture. Ce qui freine, ce qui coûte, ce qui mérite d'être corrigé en priorité.</p><span class="card-tag">Point de départ</span></div>
-    <div class="card"><div class="card-num">02</div><h3>Optimisation de l'organisation</h3><p>Clarification des rôles, des responsabilités et des méthodes de travail. Sortir d'un fonctionnement au cas par cas pour installer une organisation stable.</p><span class="card-tag">Structure</span></div>
-    <div class="card"><div class="card-num">03</div><h3>Pilotage de la performance</h3><p>Food cost, masse salariale, marge brute. Des indicateurs simples et lisibles pour décider avec des repères réels — pas au ressenti.</p><span class="card-tag">Rentabilité</span></div>
-    <div class="card"><div class="card-num">04</div><h3>Structuration des processus</h3><p>Procédures claires et applicables. Réduction des écarts d'exécution entre les équipes, les services et les jours.</p><span class="card-tag">Standards</span></div>
-    <div class="card"><div class="card-num">05</div><h3>Accompagnement ciblé</h3><p>Intervention sur un point précis : ouverture, reprise, remise en ordre, correction d'un dysfonctionnement spécifique.</p><span class="card-tag">Sur mesure</span></div>
-    <div class="card"><div class="card-num">06</div><h3>Outils et supports terrain</h3><p>Check-lists, tableaux de bord, suivis d'exploitation. Des documents simples, lisibles, réellement utilisables par les équipes.</p><span class="card-tag">Outils</span></div>
+    <div class="service-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-content">
+          <h3>Diagnostic opérationnel</h3>
+          <p>Analyse du fonctionnement réel — organisation, fluidité, répartition des tâches, points de rupture. Ce qui freine, ce qui coûte, ce qui mérite d'être corrigé en priorité.</p>
+          <span class="service-tag">Point de départ</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-content">
+          <h3>Optimisation de l'organisation</h3>
+          <p>Clarification des rôles, des responsabilités et des méthodes de travail. Installer une organisation stable, moins dépendante des individus.</p>
+          <span class="service-tag">Structure</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-content">
+          <h3>Pilotage de la performance</h3>
+          <p>Food cost, masse salariale, marge brute. Des indicateurs simples et lisibles pour décider avec des repères réels — pas au ressenti.</p>
+          <span class="service-tag">Rentabilité</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-content">
+          <h3>Structuration des processus</h3>
+          <p>Procédures claires et applicables. Réduction des écarts d'exécution entre les équipes, les services et les jours.</p>
+          <span class="service-tag">Standards</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <div class="service-content">
+          <h3>Accompagnement ciblé</h3>
+          <p>Intervention sur un point précis : ouverture, reprise, remise en ordre, correction d'un dysfonctionnement spécifique.</p>
+          <span class="service-tag">Sur mesure</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <div class="service-content">
+          <h3>Outils et supports terrain</h3>
+          <p>Check-lists, tableaux de bord, suivis d'exploitation. Des documents simples, lisibles, réellement utilisables par les équipes.</p>
+          <span class="service-tag">Outils</span>
+        </div>
+      </div>
+    </div>
 
     <div class="sep"></div>
-    <div class="label">Ce que ça change concrètement</div>
-    <div class="value-item"><div class="vnum">A</div><div><h3>Clarté</h3><p>Vous savez ce qui fonctionne, ce qui dysfonctionne et pourquoi.</p></div></div>
-    <div class="value-item"><div class="vnum">B</div><div><h3>Structure</h3><p>Les méthodes et les rôles sont définis. L'exploitation devient moins dépendante des individus.</p></div></div>
-    <div class="value-item"><div class="vnum">C</div><div><h3>Recul</h3><p>Vous sortez du mode réaction pour entrer dans une logique de pilotage.</p></div></div>
+    <div class="overline" style="margin-bottom:14px;">Ce que ça change concrètement</div>
+
+    <div class="outcome-row">
+      <div class="outcome-item">
+        <span class="outcome-letter">A</span>
+        <h3>Clarté</h3>
+        <p>Vous savez ce qui fonctionne et ce qui dysfonctionne.</p>
+      </div>
+      <div class="outcome-item">
+        <span class="outcome-letter">B</span>
+        <h3>Structure</h3>
+        <p>L'exploitation devient moins dépendante des individus.</p>
+      </div>
+      <div class="outcome-item">
+        <span class="outcome-letter">C</span>
+        <h3>Recul</h3>
+        <p>Vous entrez dans une logique de pilotage.</p>
+      </div>
+    </div>
 
     <div class="sep"></div>
     <button class="btn btn-gold" onclick="goTo('methode')">Voir la méthode →</button>
     <div class="page-bottom"></div>
   </div>
-</div>
+  </div>
 
-  <!-- PAGE 4 : MÉTHODE -->
+  <!-- ▌ PAGE 4 : MÉTHODE ▌ -->
   <div class="page" id="page-methode" data-page="methode">
-<div class="page-inner">
+  <div class="page-inner">
     <div class="progress-dots">
       <div class="pdot" data-for="accueil"></div>
       <div class="pdot" data-for="problemes"></div>
@@ -173,42 +1028,71 @@
       <div class="pdot active" data-for="methode"></div>
       <div class="pdot" data-for="contact"></div>
     </div>
-    <div class="label">Méthode</div>
-    <h2 class="section-title">Terrain. Simple. Direct. Orienté résultat.</h2>
+    <div class="overline">Méthode</div>
+    <h2 class="section-title">Terrain. Simple. Direct. <em>Orienté résultat.</em></h2>
     <p class="lead">Pas de modèle théorique plaqué sur une réalité qu'on n'a pas pris le temps de comprendre.</p>
 
-    <div class="steps">
-      <div class="step-item"><div class="step-dot">1</div><div><h3>Observer le terrain</h3><p>Comprendre comment l'établissement fonctionne réellement — pas sur le papier. Comment le service s'organise, où l'énergie se perd.</p></div></div>
-      <div class="step-item"><div class="step-dot">2</div><div><h3>Identifier les causes réelles</h3><p>Pas les symptômes visibles, les causes profondes. Un problème de rentabilité cache souvent un problème d'organisation.</p></div></div>
-      <div class="step-item"><div class="step-dot">3</div><div><h3>Hiérarchiser les priorités</h3><p>Tout ne peut pas être corrigé en même temps. On concentre les efforts là où ils auront le plus d'effet.</p></div></div>
-      <div class="step-item"><div class="step-dot">4</div><div><h3>Proposer des actions concrètes</h3><p>Pas un rapport de 40 pages. Des priorités claires, des actions précises, des outils adaptés à la taille de l'établissement.</p></div></div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+        <div class="tl-step">Étape 01</div>
+        <h3>Observer le terrain</h3>
+        <p>Comprendre comment l'établissement fonctionne réellement — pas sur le papier. Comment le service s'organise, où l'énergie se perd.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+        <div class="tl-step">Étape 02</div>
+        <h3>Identifier les causes réelles</h3>
+        <p>Pas les symptômes visibles — les causes profondes. Un problème de rentabilité cache souvent un problème d'organisation.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+        <div class="tl-step">Étape 03</div>
+        <h3>Hiérarchiser les priorités</h3>
+        <p>Tout ne peut pas être corrigé en même temps. On concentre les efforts là où ils auront le plus d'effet.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+        <div class="tl-step">Étape 04</div>
+        <h3>Proposer des actions concrètes</h3>
+        <p>Pas un rapport de 40 pages. Des priorités claires, des actions précises, des outils adaptés à la taille de l'établissement.</p>
+      </div>
     </div>
 
     <div class="sep"></div>
-    <div class="label">Pourquoi R&C Pilotage</div>
-    <h2 class="section-title" style="margin-bottom:20px">On ne voit jamais bien ses propres angles morts.</h2>
+    <div class="overline" style="margin-bottom:14px;">Pourquoi R&C Pilotage</div>
+    <h2 class="section-title" style="font-size:1.55rem;margin-bottom:20px;">On ne voit jamais bien ses propres <em>angles morts.</em></h2>
 
-    <div class="why-card"><h3>Continuer seul a un coût</h3><p>Chaque mois sans correction, c'est un mois de pertes, de désorganisation et d'énergie gaspillée. Ce coût est réel, même quand il est invisible.</p></div>
-    <div class="why-card"><h3>Le regard externe voit ce que l'interne ne voit plus</h3><p>On finit toujours par s'adapter à ce qui dysfonctionne. Un regard extérieur ne juge pas — il observe ce que vous avez arrêté de voir.</p></div>
-    <div class="why-card"><h3>La méthode change plus que la motivation</h3><p>On ne résout pas un problème d'organisation avec de la bonne volonté. On le résout avec une structure et des priorités bien hiérarchisées.</p></div>
+    <div class="why-card">
+      <h3>Continuer seul a un coût</h3>
+      <p>Chaque mois sans correction, c'est un mois de pertes, de désorganisation et d'énergie gaspillée. Ce coût est réel, même quand il est invisible.</p>
+    </div>
+    <div class="why-card">
+      <h3>Le regard externe voit ce que l'interne ne voit plus</h3>
+      <p>On finit toujours par s'adapter à ce qui dysfonctionne. Un regard extérieur observe ce que vous avez arrêté de voir.</p>
+    </div>
+    <div class="why-card">
+      <h3>La méthode change plus que la motivation</h3>
+      <p>On ne résout pas un problème d'organisation avec de la bonne volonté. On le résout avec une structure et des priorités bien hiérarchisées.</p>
+    </div>
 
     <div class="sep"></div>
-    <div class="label">À propos</div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:0">
-      <p style="color:var(--muted);font-size:0.92rem;line-height:1.72;font-weight:300;margin-bottom:12px">R&C Pilotage s'adresse aux établissements qui veulent <strong style="color:var(--text);font-weight:500">sortir d'un fonctionnement subi</strong> pour entrer dans une logique de maîtrise opérationnelle.</p>
-      <p style="color:var(--muted);font-size:0.92rem;line-height:1.72;font-weight:300;margin-bottom:12px">J'arrive avec une méthode et un regard structuré — capable de voir ce que les gens de l'intérieur ne voient plus. Non pas parce qu'ils sont incompétents, mais parce qu'ils sont <strong style="color:var(--text);font-weight:500">dedans</strong>.</p>
-      <p style="color:var(--muted);font-size:0.92rem;line-height:1.72;font-weight:300">Je viens sur le terrain, je regarde, j'identifie ce qui coûte et ce qui freine, et je propose des corrections concrètes. <strong style="color:var(--text);font-weight:500">L'objectif n'est pas rassurant. Il est utile.</strong></p>
+    <div class="overline" style="margin-bottom:14px;">À propos</div>
+    <div class="about-block">
+      <p>R&C Pilotage s'adresse aux établissements qui veulent <strong>sortir d'un fonctionnement subi</strong> pour entrer dans une logique de maîtrise opérationnelle.</p>
+      <p>J'arrive avec une méthode et un regard structuré — capable de voir ce que les gens de l'intérieur ne voient plus. Non pas parce qu'ils sont incompétents, mais parce qu'ils sont <strong>dedans</strong>.</p>
+      <p>Je viens sur le terrain, j'identifie ce qui coûte et ce qui freine, et propose des corrections concrètes. <strong>L'objectif n'est pas rassurant. Il est utile.</strong></p>
     </div>
 
     <div class="sep"></div>
     <button class="btn btn-gold" onclick="goTo('contact')">Prendre contact →</button>
     <div class="page-bottom"></div>
   </div>
-</div>
+  </div>
 
-  <!-- PAGE 5 : CONTACT -->
+  <!-- ▌ PAGE 5 : CONTACT ▌ -->
   <div class="page" id="page-contact" data-page="contact">
-<div class="page-inner">
+  <div class="page-inner">
     <div class="progress-dots">
       <div class="pdot" data-for="accueil"></div>
       <div class="pdot" data-for="problemes"></div>
@@ -216,18 +1100,18 @@
       <div class="pdot" data-for="methode"></div>
       <div class="pdot active" data-for="contact"></div>
     </div>
-    <div class="label">Contact</div>
-    <h2 class="section-title">Exposez votre situation.</h2>
-    <p class="lead">Plus votre demande est précise, plus le retour sera utile. Décrivez votre établissement, le problème et ce que vous cherchez à corriger.</p>
+    <div class="overline">Contact</div>
+    <h2 class="section-title">Exposez votre <em>situation.</em></h2>
+    <p class="lead">Plus votre demande est précise, plus le retour sera utile.</p>
 
-    <div class="contact-meta">
-      <div class="contact-row">
-        <span>Adresse e-mail</span>
-        <a href="mailto:contact@rcpilotage.fr">contact@rcpilotage.fr</a>
+    <div class="contact-info">
+      <div class="contact-info-row">
+        <span class="ci-label">E-mail</span>
+        <span class="ci-val"><a href="mailto:contact@rcpilotage.fr">contact@rcpilotage.fr</a></span>
       </div>
-      <div class="contact-row">
-        <span>Premier échange</span>
-        <p>Gratuit — pour comprendre votre contexte et vérifier si une intervention a du sens.</p>
+      <div class="contact-info-row">
+        <span class="ci-label">Premier échange</span>
+        <span class="ci-val" style="font-size:0.82rem;color:var(--muted);">Gratuit — pour comprendre votre contexte et vérifier si une intervention a du sens.</span>
       </div>
     </div>
 
@@ -266,52 +1150,46 @@
       </div>
 
       <div class="fg">
-        <label>Sujet principal * <span style="font-size:0.78rem;color:var(--muted);font-weight:400;">Vous pouvez sélectionner plusieurs sujets</span></label>
+        <label>Sujet principal * <span style="font-size:0.72rem;color:var(--muted);font-weight:300;">Plusieurs sujets possibles</span></label>
         <div class="checkbox-group" id="sujetGroup">
-          <label class="check-item"><input type="checkbox" name="sujet" value="Organisation générale"/><span class="check-box-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Organisation générale</label>
-          <label class="check-item"><input type="checkbox" name="sujet" value="Rentabilité / marges"/><span class="check-box-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Rentabilité / marges</label>
-          <label class="check-item"><input type="checkbox" name="sujet" value="Masse salariale"/><span class="check-box-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Masse salariale</label>
-          <label class="check-item"><input type="checkbox" name="sujet" value="Processus et méthodes"/><span class="check-box-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Processus et méthodes</label>
-          <label class="check-item"><input type="checkbox" name="sujet" value="Management / encadrement"/><span class="check-box-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Management / encadrement</label>
-          <label class="check-item"><input type="checkbox" name="sujet" value="Diagnostic global"/><span class="check-box-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Diagnostic global</label>
-          <label class="check-item"><input type="checkbox" name="sujet" value="Autre"/><span class="check-box-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Autre</label>
+          <label class="check-item"><input type="checkbox" name="sujet" value="Organisation générale"/><span class="check-box-icon"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1,4.5 4,7.5 10,1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Organisation générale</label>
+          <label class="check-item"><input type="checkbox" name="sujet" value="Rentabilité / marges"/><span class="check-box-icon"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1,4.5 4,7.5 10,1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Rentabilité / marges</label>
+          <label class="check-item"><input type="checkbox" name="sujet" value="Masse salariale"/><span class="check-box-icon"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1,4.5 4,7.5 10,1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Masse salariale</label>
+          <label class="check-item"><input type="checkbox" name="sujet" value="Processus et méthodes"/><span class="check-box-icon"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1,4.5 4,7.5 10,1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Processus et méthodes</label>
+          <label class="check-item"><input type="checkbox" name="sujet" value="Management / encadrement"/><span class="check-box-icon"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1,4.5 4,7.5 10,1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Management / encadrement</label>
+          <label class="check-item"><input type="checkbox" name="sujet" value="Diagnostic global"/><span class="check-box-icon"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1,4.5 4,7.5 10,1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Diagnostic global</label>
+          <label class="check-item"><input type="checkbox" name="sujet" value="Autre"/><span class="check-box-icon"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1,4.5 4,7.5 10,1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Autre</label>
         </div>
-        <p id="sujetError" style="display:none;color:#e05555;font-size:0.8rem;margin-top:6px;">Veuillez sélectionner au moins un sujet.</p>
+        <p id="sujetError" style="display:none;color:#c0504d;font-size:0.75rem;margin-top:6px;">Veuillez sélectionner au moins un sujet.</p>
       </div>
 
       <div class="fg"><label for="probleme">Quel problème rencontrez-vous ? *</label><textarea id="probleme" name="probleme" required placeholder="Décrivez concrètement la situation actuelle, ce qui bloque ou ce qui se répète."></textarea></div>
       <div class="fg"><label for="objectif">Quel résultat cherchez-vous ? *</label><textarea id="objectif" name="objectif" required placeholder="Ce que vous souhaitez améliorer ou corriger." style="min-height:80px"></textarea></div>
-</div>
 
-      <!-- Case à cocher RGPD personnalisée -->
       <label class="consent" id="consentLabel" style="cursor:pointer;" onclick="toggleConsent()">
-        <span id="customCheck" style="
-          display:inline-flex;align-items:center;justify-content:center;
-          width:18px;height:18px;min-width:18px;
-          border:2px solid rgba(29,95,138,0.6);
-          border-radius:4px;background:transparent;
-          transition:all 0.2s;margin-top:1px;
-        "></span>
+        <span id="customCheck" style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;min-width:18px;border:1.5px solid rgba(201,169,110,0.4);border-radius:2px;background:transparent;transition:all 0.2s;margin-top:1px;flex-shrink:0;"></span>
         <input type="checkbox" id="consentBox" style="display:none"/>
         <span>J'accepte que les informations transmises soient utilisées pour être recontacté au sujet de ma demande.</span>
       </label>
-      <p id="consentError" style="display:none;color:#e05555;font-size:0.8rem;margin-top:4px;margin-bottom:12px;">Veuillez accepter que les informations transmises soient utilisées pour envoyer votre demande.</p>
+      <p id="consentError" style="display:none;color:#c0504d;font-size:0.75rem;margin-top:4px;margin-bottom:12px;">Veuillez accepter que les informations transmises soient utilisées pour envoyer votre demande.</p>
 
       <button type="button" class="btn btn-gold" id="submitBtn" onclick="validateAndSubmit()">
         Envoyer ma demande
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
     </form>
 
-    <div style="margin-top:20px;text-align:center;font-size:0.82rem;color:var(--muted)">
-      © 2026 R&C Pilotage · <a href="mailto:contact@rcpilotage.fr" style="color:var(--muted)">contact@rcpilotage.fr</a>
+    <div class="footer-note" style="margin-top:24px;">
+      © 2026 R&C Pilotage · <a href="mailto:contact@rcpilotage.fr">contact@rcpilotage.fr</a>
     </div>
     <div class="page-bottom"></div>
   </div>
-</div>
-</div>
+  </div>
 
-<!-- TABBAR -->
+</div><!-- /page-inner -->
+</div><!-- /pages-container -->
+
+<!-- ═══════════ TABBAR ═══════════ -->
 <nav class="tabbar" id="tabbar">
   <div class="tab-indicator" id="tabIndicator"></div>
   <button class="tab active" data-target="accueil" onclick="goTo('accueil')">
@@ -336,7 +1214,128 @@
   </button>
 </nav>
 
+<script>
+if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+  location.replace('https://' + location.hostname + location.pathname + location.search);
+}
 
-<script src="script.js"></script>
+const PAGES = ['accueil','problemes','services','methode','contact'];
+let current = 'accueil';
+let isAnimating = false;
+
+function goTo(target) {
+  if (target === current || isAnimating) return;
+  isAnimating = true;
+
+  const fromEl = document.getElementById('page-' + current);
+  const toEl   = document.getElementById('page-' + target);
+  const dir    = PAGES.indexOf(target) > PAGES.indexOf(current) ? 1 : -1;
+
+  fromEl.classList.remove('active');
+  fromEl.classList.add('exit-left');
+  if (dir < 0) fromEl.style.transform = 'translateX(48px)';
+  else fromEl.style.transform = '';
+
+  toEl.style.transform = dir > 0 ? 'translateX(48px)' : 'translateX(-48px)';
+  toEl.style.opacity = '0';
+  toEl.style.pointerEvents = 'none';
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      toEl.style.transform = '';
+      toEl.style.opacity = '';
+      toEl.style.pointerEvents = '';
+      toEl.classList.add('active');
+      toEl.scrollTop = 0;
+    });
+  });
+
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.target === target));
+  document.querySelectorAll('.pdot').forEach(d => d.classList.toggle('active', d.dataset.for === target));
+  updateIndicator(target);
+  current = target;
+
+  setTimeout(() => {
+    fromEl.classList.remove('exit-left');
+    fromEl.style.transform = '';
+    isAnimating = false;
+  }, 380);
+}
+
+function updateIndicator(target) {
+  const indicator = document.getElementById('tabIndicator');
+  document.querySelectorAll('.tab').forEach(t => {
+    if (t.dataset.target === target) {
+      indicator.style.width = t.offsetWidth + 'px';
+      indicator.style.left  = t.offsetLeft + 'px';
+    }
+  });
+}
+
+window.addEventListener('load', () => updateIndicator('accueil'));
+window.addEventListener('resize', () => updateIndicator(current));
+
+// Swipe
+let touchStartX = 0, touchStartY = 0;
+const container = document.getElementById('pagesContainer');
+container.addEventListener('touchstart', e => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+container.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+    const idx = PAGES.indexOf(current);
+    if (dx < 0 && idx < PAGES.length - 1) goTo(PAGES[idx + 1]);
+    else if (dx > 0 && idx > 0) goTo(PAGES[idx - 1]);
+  }
+}, { passive: true });
+
+// Mouse wheel scroll
+document.addEventListener('DOMContentLoaded', () => {
+  container.addEventListener('wheel', e => {
+    const active = document.querySelector('.page.active');
+    if (active) { active.scrollTop += e.deltaY; e.preventDefault(); }
+  }, { passive: false });
+});
+
+// RGPD consent
+function toggleConsent() {
+  const cb  = document.getElementById('consentBox');
+  const box = document.getElementById('customCheck');
+  cb.checked = !cb.checked;
+  if (cb.checked) {
+    box.style.background   = 'var(--gold)';
+    box.style.borderColor  = 'var(--gold)';
+    box.innerHTML = '<svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1,4.5 4,7.5 10,1.5" stroke="#0a0b0d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  } else {
+    box.style.background  = 'transparent';
+    box.style.borderColor = 'rgba(201,169,110,0.4)';
+    box.innerHTML = '';
+  }
+}
+
+document.getElementById('contactForm').addEventListener('submit', function() {
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Envoi en cours…';
+  btn.disabled = true;
+});
+
+function validateAndSubmit() {
+  let valid = true;
+  const sujets = document.querySelectorAll('input[name="sujet"]:checked');
+  const sujetError = document.getElementById('sujetError');
+  if (sujets.length === 0) { sujetError.style.display = 'block'; valid = false; }
+  else { sujetError.style.display = 'none'; }
+
+  const consent = document.getElementById('consentBox');
+  const consentError = document.getElementById('consentError');
+  if (!consent.checked) { consentError.style.display = 'block'; valid = false; }
+  else { consentError.style.display = 'none'; }
+
+  if (valid) document.getElementById('contactForm').submit();
+}
+</script>
 </body>
 </html>
