@@ -38,11 +38,16 @@
   --serif:     'Cormorant Garamond', Georgia, serif;
   --sans:      'Outfit', sans-serif;
 
-  /* Courbes d'animation premium */
+  /* Courbes d'animation — hiérarchie motion */
   --ease:      cubic-bezier(0.4,0,0.2,1);
-  --cinematic: cubic-bezier(0.16,1,0.3,1);   /* inertie — décélération longue */
-  --overshoot: cubic-bezier(0.34,1.3,0.64,1); /* légère tension organique */
-  --out-expo:  cubic-bezier(0.19,1,0.22,1);   /* sortie exponentielle douce */
+  /* Éléments majeurs — inertie longue, masse perçue */
+  --cinematic: cubic-bezier(0.16,1,0.3,1);
+  /* Éléments secondaires — décélération rapide, légère */
+  --swift:     cubic-bezier(0.22,1,0.36,1);
+  /* Éléments atmosphériques — très lent, organique */
+  --drift:     cubic-bezier(0.12,0.8,0.32,1);
+  /* Micro-interactions — snap immédiat */
+  --snap:      cubic-bezier(0.34,1.2,0.64,1);
 }
 
 html, body {
@@ -136,7 +141,7 @@ button { font-family: var(--sans); }
   flex: 1; max-width: 100px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 3px; border: none; background: transparent;
-  color: var(--muted); transition: color 0.20s var(--ease);
+  color: var(--muted); transition: color 0.25s var(--swift);
   padding: 8px 4px; font-family: var(--sans);
   -webkit-tap-highlight-color: transparent;
   position: relative;
@@ -166,6 +171,15 @@ button { font-family: var(--sans); }
   font-size: 0.6rem; font-weight: 400; letter-spacing: 3px;
   text-transform: uppercase; color: var(--gold); opacity: 0.7;
   display: block; margin-bottom: 18px;
+  /* Micro-underline animé au chargement de page */
+  position: relative; width: fit-content;
+}
+.page.active .overline::after {
+  content: '';
+  position: absolute; bottom: -3px; left: 0;
+  height: 1px; background: var(--gold); opacity: 0.4;
+  animation: barFill 0.6s var(--swift) 0.3s both;
+  --w: 100%;
 }
 h2.heading {
   font-family: var(--serif); font-size: clamp(1.85rem, 5vw, 2.7rem);
@@ -175,7 +189,12 @@ h2.heading {
 h2.heading em { font-style: italic; color: var(--goldb); }
 .body-text { font-size: 0.87rem; color: var(--muted); line-height: 1.8; font-weight: 300; }
 .sep       { height: 1px; background: var(--border); margin: 32px 0; }
-.sep-short { width: 44px; height: 1px; background: var(--goldline); margin: 22px 0; }
+.sep-short { width: 44px; height: 1px; background: linear-gradient(90deg, var(--gold), transparent); margin: 22px 0; }
+/* Séparateur chaud — respiration visuelle entre blocs majeurs */
+.sep-warm  {
+  height: 1px; margin: 36px 0;
+  background: linear-gradient(90deg, transparent, rgba(176,138,80,0.25) 40%, rgba(176,138,80,0.06) 80%, transparent);
+}
 .pb        { height: 8px; }
 
 /* ─────────────────────────────────────
@@ -204,9 +223,26 @@ h2.heading em { font-style: italic; color: var(--goldb); }
   content: '';
   position: absolute; inset: 0; pointer-events: none;
   background:
-    radial-gradient(ellipse 90% 55% at 20% 85%, rgba(176,138,80,0.055) 0%, transparent 65%),
-    radial-gradient(ellipse 60% 40% at 85% 15%, rgba(176,138,80,0.025) 0%, transparent 65%),
-    radial-gradient(ellipse 120% 70% at 50% 60%, transparent 45%, rgba(7,8,10,0.7) 100%);
+    radial-gradient(ellipse 90% 55% at 20% 85%, rgba(176,138,80,0.065) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 40% at 85% 10%, rgba(176,138,80,0.028) 0%, transparent 65%),
+    radial-gradient(ellipse 120% 70% at 50% 60%, transparent 45%, rgba(7,8,10,0.72) 100%);
+}
+/* Halo central respirant — chaleur organique */
+.hero-halo {
+  position: absolute; bottom: 10%; left: -8%;
+  width: 55vw; height: 55vw; max-width: 440px; max-height: 440px;
+  border-radius: 50%; pointer-events: none; z-index: 0;
+  background: radial-gradient(circle, rgba(176,138,80,0.042) 0%, transparent 68%);
+  animation: breathe 7s var(--drift) infinite;
+  filter: blur(1px);
+}
+/* Halo accent haut-droite — très discret */
+.hero-halo2 {
+  position: absolute; top: 5%; right: -5%;
+  width: 35vw; height: 35vw; max-width: 280px; max-height: 280px;
+  border-radius: 50%; pointer-events: none; z-index: 0;
+  background: radial-gradient(circle, rgba(176,138,80,0.018) 0%, transparent 70%);
+  animation: breathe 11s var(--drift) 3.5s infinite;
 }
 .hero-content { position: relative; z-index: 1; }
 
@@ -281,10 +317,10 @@ h2.heading em { font-style: italic; color: var(--goldb); }
 
 /* Boutons */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 13px 24px; border-radius: 2px; font-weight: 500; font-size: 0.83rem; border: none; font-family: var(--sans); width: 100%; letter-spacing: 0.5px; -webkit-tap-highlight-color: transparent; }
-.btn-gold  { background: var(--gold); color: var(--bg); font-weight: 600; transition: background 0.20s var(--ease), transform 0.2s var(--cinematic); }
-.btn-gold:hover  { background: var(--goldb); }
-.btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border2); transition: border-color 0.20s var(--ease), color 0.20s var(--ease); }
-.btn-ghost:hover { border-color: var(--goldline); color: var(--white); }
+.btn-gold  { background: var(--gold); color: var(--bg); font-weight: 600; transition: background 0.22s var(--ease), transform 0.22s var(--snap), box-shadow 0.22s var(--ease); }
+.btn-gold:hover  { background: var(--goldb); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(176,138,80,0.22); }
+.btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border2); transition: border-color 0.22s var(--ease), color 0.22s var(--ease), background 0.22s var(--ease); }
+.btn-ghost:hover { border-color: var(--goldline); color: var(--white); background: rgba(176,138,80,0.04); }
 .btn:active { transform: scale(0.985); }
 
 /* Métriques bas hero */
@@ -319,10 +355,10 @@ h2.heading em { font-style: italic; color: var(--goldb); }
 .prob-item {
   display: flex; align-items: flex-start; gap: 14px;
   padding: 18px 0; border-bottom: 1px solid var(--border);
-  transition: padding-left 0.22s var(--ease);
+  transition: padding-left 0.22s var(--ease), background 0.18s var(--ease);
 }
 .prob-item:first-child { border-top: 1px solid var(--border); }
-.prob-item:hover { padding-left: 4px; }
+.prob-item:hover { padding-left: 6px; background: rgba(176,138,80,0.018); }
 .prob-idx { font-family: var(--serif); font-size: 0.95rem; color: rgba(176,138,80,0.22); font-weight: 300; flex-shrink: 0; width: 20px; padding-top: 1px; }
 .prob-body h3 { color: var(--white); font-size: 0.87rem; font-weight: 500; margin-bottom: 5px; line-height: 1.3; }
 .prob-body p  { color: var(--muted); font-size: 0.79rem; line-height: 1.65; font-weight: 300; }
@@ -378,7 +414,7 @@ h2.heading em { font-style: italic; color: var(--goldb); }
 .svc-list {}
 .svc-item { display: flex; gap: 16px; align-items: flex-start; padding: 19px 0; border-bottom: 1px solid var(--border); transition: padding-left 0.22s var(--ease); }
 .svc-item:first-child { border-top: 1px solid var(--border); }
-.svc-item:hover { padding-left: 4px; }
+.svc-item:hover { padding-left: 6px; background: rgba(176,138,80,0.018); }
 .svc-n { font-family: var(--serif); font-size: 1.1rem; color: rgba(176,138,80,0.2); font-weight: 300; flex-shrink: 0; width: 22px; line-height: 1; padding-top: 2px; }
 .svc-body h3 { color: var(--white); font-size: 0.87rem; font-weight: 500; margin-bottom: 5px; }
 .svc-body p  { color: var(--muted); font-size: 0.79rem; line-height: 1.65; font-weight: 300; }
@@ -512,28 +548,76 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
 /* ─────────────────────────────────────
    ANIMATIONS — motion premium
 ───────────────────────────────────── */
+/* ── Keyframes hiérarchisées ── */
 @keyframes riseIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes barFill { from { width:0 } to { width:var(--w,100%) } }
+@keyframes riseSlow {
+  /* Titres et héros — mouvement plus ample, plus lent = masse */
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes barFill {
+  from { width: 0; }
+  to   { width: var(--w, 100%); }
+}
+/* Halo respirant — lumière organique */
+@keyframes breathe {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%       { opacity: 0.85; transform: scale(1.08); }
+}
+/* Pulse discret sur les points live */
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
 
-/* Stagger d'entrée — timing organique, pas uniforme */
+/* ── Stagger entrée — hiérarchie motion ── */
 [data-a] { opacity: 0; }
-.page.active [data-a="1"] { animation: riseIn 0.45s var(--cinematic) 0.02s forwards; }
-.page.active [data-a="2"] { animation: riseIn 0.45s var(--cinematic) 0.07s forwards; }
-.page.active [data-a="3"] { animation: riseIn 0.48s var(--cinematic) 0.12s forwards; }
-.page.active [data-a="4"] { animation: riseIn 0.48s var(--cinematic) 0.17s forwards; }
-.page.active [data-a="5"] { animation: riseIn 0.48s var(--cinematic) 0.21s forwards; }
-.page.active [data-a="6"] { animation: riseIn 0.45s var(--cinematic) 0.25s forwards; }
-.page.active [data-a="7"] { animation: riseIn 0.45s var(--cinematic) 0.28s forwards; }
-.page.active [data-a="8"] { animation: riseIn 0.42s var(--cinematic) 0.31s forwards; }
-.page.active [data-a="9"] { animation: riseIn 0.42s var(--cinematic) 0.34s forwards; }
 
-/* Barres — délai plus long = sensation de chargement organique */
+/* Dots navigation — quasi-instantané */
+.page.active [data-a="1"] {
+  animation: fadeIn 0.3s var(--ease) 0.02s forwards;
+}
+/* Overline — léger */
+.page.active [data-a="2"] {
+  animation: riseIn 0.38s var(--swift) 0.06s forwards;
+}
+/* Titre principal — masse, lent, ample */
+.page.active [data-a="3"] {
+  animation: riseSlow 0.6s var(--cinematic) 0.10s forwards;
+}
+/* Corps texte */
+.page.active [data-a="4"] {
+  animation: riseIn 0.42s var(--swift) 0.18s forwards;
+}
+/* Dashboard / composant principal */
+.page.active [data-a="5"] {
+  animation: riseIn 0.48s var(--cinematic) 0.24s forwards;
+}
+/* Éléments secondaires */
+.page.active [data-a="6"] {
+  animation: riseIn 0.42s var(--swift) 0.30s forwards;
+}
+.page.active [data-a="7"] {
+  animation: riseIn 0.38s var(--swift) 0.34s forwards;
+}
+.page.active [data-a="8"] {
+  animation: fadeIn 0.35s var(--ease) 0.37s forwards;
+}
+.page.active [data-a="9"] {
+  animation: fadeIn 0.32s var(--ease) 0.40s forwards;
+}
+
+/* Barres — remplissage avec masse */
 .page.active .dm-fill,
 .page.active .kpi-fill {
-  animation: barFill 1.1s var(--out-expo) 0.5s both;
+  animation: barFill 0.9s var(--drift) 0.45s both;
 }
 
 /* ─────────────────────────────────────
@@ -550,11 +634,17 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
   .nav-cards { grid-template-columns: repeat(4,1fr); }
   .stat-grid  { grid-template-columns: repeat(4,1fr); }
   .case-body  { grid-template-columns: 1fr 1fr; }
+  /* Titres hero plus monumentaux sur desktop */
+  .hero-t1, .hero-t2, .hero-t3 { font-size: clamp(3.2rem,7vw,6.2rem); letter-spacing: -2.5px; }
+  h2.heading { font-size: clamp(2rem,3.5vw,2.8rem); }
+  /* Espacement typographique affiné */
+  .body-text { font-size: 0.9rem; letter-spacing: 0.05px; }
 }
 @media (min-width: 1100px) {
   .section { padding: 68px 88px; }
   .hero { padding: 76px 88px 56px; }
   .inner { max-width: 860px; }
+  .hero-t1, .hero-t2, .hero-t3 { font-size: clamp(3.6rem,6vw,7rem); letter-spacing: -3px; }
 }
 </style>
 </head>
@@ -588,7 +678,8 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
   <div style="padding-bottom:8px">
 
     <section class="hero">
-      <div class="hero-grain"></div>
+      <div class="hero-halo"></div>
+      <div class="hero-halo2"></div>
       <div class="inner hero-content">
 
         <div class="pdots" data-a="1" style="margin-bottom:36px">
@@ -657,10 +748,10 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
 
         <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:36px" data-a="7">
           <button class="btn btn-gold" onclick="goTo('contact')">
-            Exposer ma situation
+            Demander un diagnostic
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
-          <button class="btn btn-ghost" onclick="goTo('problemes')">Voir si ça vous ressemble →</button>
+          <button class="btn btn-ghost" onclick="goTo('problemes')">Évaluer votre exploitation →</button>
         </div>
 
         <div class="hero-metrics" data-a="8">
@@ -752,7 +843,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
       </div>
     </div>
 
-    <div class="sep"></div>
+    <div class="sep-warm"></div>
 
     <div class="data-block" data-a="6">
       <div class="db-head">
@@ -784,7 +875,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
       <div class="quote-line"></div>
       <p>Si vous vous reconnaissez ici, un regard externe vous serait probablement utile.</p>
     </div>
-    <button class="btn btn-gold" onclick="goTo('services')" data-a="9" style="margin-top:8px">Voir ce que j'apporte →</button>
+    <button class="btn btn-gold" onclick="goTo('services')" data-a="9" style="margin-top:8px">Voir les interventions →</button>
     <div class="pb"></div>
   </div></section>
   </div>
@@ -860,7 +951,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
       </div>
     </div>
 
-    <div class="sep"></div>
+    <div class="sep-warm"></div>
     <span class="overline" data-a="7">Ce que ça change</span>
     <div class="outcomes" data-a="8">
       <div class="outcome"><span class="out-letter">A</span><h3>Clarté</h3><p>Vous savez ce qui fonctionne et ce qui dysfonctionne.</p></div>
@@ -868,7 +959,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
       <div class="outcome"><span class="out-letter">C</span><h3>Recul</h3><p>Vous entrez dans une logique de pilotage.</p></div>
     </div>
     <div class="sep"></div>
-    <button class="btn btn-gold" onclick="goTo('methode')" data-a="9">Voir la méthode →</button>
+    <button class="btn btn-gold" onclick="goTo('methode')" data-a="9">Comprendre l'approche →</button>
     <div class="pb"></div>
   </div></section>
   </div>
@@ -901,7 +992,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
       <div class="stat-card"><span class="stat-val"><em>CHR</em></span><span class="stat-lbl">Spécialité unique — restauration, hôtellerie</span></div>
     </div>
 
-    <div class="sep"></div>
+    <div class="sep-warm"></div>
     <span class="overline" data-a="7">Pourquoi R&C Pilotage</span>
     <div data-a="7">
       <div class="why-item"><h3>Continuer seul a un coût</h3><p>Chaque mois sans correction, c'est un mois de pertes et d'énergie gaspillée. Ce coût est réel, même quand il est invisible.</p></div>
@@ -909,7 +1000,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
       <div class="why-item"><h3>La méthode change plus que la motivation</h3><p>Un problème d'organisation ne se résout pas avec de la bonne volonté — mais avec une structure et des priorités bien hiérarchisées.</p></div>
     </div>
 
-    <div class="sep"></div>
+    <div class="sep-warm"></div>
     <span class="overline" data-a="8">À propos</span>
     <div class="about-card" data-a="8">
       <p>R&C Pilotage s'adresse aux établissements qui veulent <strong>sortir d'un fonctionnement subi</strong> pour entrer dans une logique de maîtrise opérationnelle.</p>
@@ -917,7 +1008,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
       <p>Je viens sur le terrain, j'identifie ce qui coûte et ce qui freine, je propose des corrections concrètes. <strong>L'objectif n'est pas rassurant. Il est utile.</strong></p>
     </div>
     <div class="sep"></div>
-    <button class="btn btn-gold" onclick="goTo('cas')" data-a="9">Voir des cas terrain →</button>
+    <button class="btn btn-gold" onclick="goTo('cas')" data-a="9">Consulter les cas terrain →</button>
     <div class="pb"></div>
   </div></section>
   </div>
@@ -1001,12 +1092,12 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
 
     </div>
 
-    <div class="sep"></div>
+    <div class="sep-warm"></div>
     <div class="quote" data-a="6">
       <div class="quote-line"></div>
       <p>Ces schémas se répètent. Les contextes changent — la logique sous-jacente reste souvent la même.</p>
     </div>
-    <button class="btn btn-gold" onclick="goTo('contact')" data-a="7" style="margin-top:8px">Parler de votre situation →</button>
+    <button class="btn btn-gold" onclick="goTo('contact')" data-a="7" style="margin-top:8px">Demander un diagnostic →</button>
     <div class="pb"></div>
   </div></section>
   </div>
@@ -1195,7 +1286,11 @@ pw.addEventListener('touchend',e=>{
 /* ── Molette ── */
 pw.addEventListener('wheel',e=>{
   const a=document.querySelector('.page.active');
-  if(a){a.scrollTop+=e.deltaY;e.preventDefault();}
+  if(a){
+    /* Inertie douce — pas de saut brutal */
+    a.scrollTop += e.deltaY * 0.92;
+    e.preventDefault();
+  }
 },{passive:false});
 
 /* ── Consentement ── */
