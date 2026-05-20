@@ -109,20 +109,14 @@ button { font-family: var(--sans); }
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
   opacity: 0;
-  transform: translateX(32px);
-  transition:
-    opacity    0.38s var(--cinematic),
-    transform  0.38s var(--cinematic);
   pointer-events: none;
-  will-change: transform, opacity;
-  contain: layout style paint;
+  /* Pas de transform, pas de transition CSS — tout géré en JS RAF */
 }
-.page.active  {
-  opacity: 1; transform: translateX(0);
+.page.active {
   pointer-events: all;
+  /* opacity géré en JS */
 }
-.page.exit-left {
-  opacity: 0; transform: translateX(-32px);
+.page.slide-left {
   pointer-events: none;
 }
 
@@ -674,7 +668,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
 <div class="pages-wrap" id="pagesWrap">
 
   <!-- ══ 1 · ACCUEIL ══ -->
-  <div class="page active" id="page-accueil" data-page="accueil">
+  <div class="page" id="page-accueil" data-page="accueil">
   <div style="padding-bottom:8px">
 
     <section class="hero">
@@ -1220,54 +1214,97 @@ if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostn
   location.replace('https://'+location.hostname+location.pathname+location.search);
 }
 
-/* ── Moteur de pages ── */
-const PAGES=['accueil','problemes','services','methode','cas','contact'];
-let current='accueil', isAnimating=false;
+/* ── Initialisation — page accueil visible immédiatement ── */
+(function init() {
+  const accueil = document.getElementById('page-accueil');
+  accueil.style.opacity = '1';
+  accueil.classList.add('active');
+})();
 
-function goTo(target){
-  if(target===current||isAnimating)return;
-  isAnimating=true;
+/* ── Moteur de pages — RAF fondu + glissement simultané ── */
+const PAGES = ['accueil','problemes','services','methode','cas','contact'];
+let current = 'accueil';
+let isAnimating = false;
 
-  const fromEl=document.getElementById('page-'+current);
-  const toEl=document.getElementById('page-'+target);
-  const dir=PAGES.indexOf(target)>PAGES.indexOf(current)?1:-1;
+const FADE_MS = 700;  /* durée — perceptible et élégant */
+const SLIDE_PX = 30;  /* glissement horizontal en pixels */
 
-  fromEl.classList.remove('active');
-  fromEl.classList.add('exit-left');
-  if(dir<0){ fromEl.style.transform='translateX(32px)'; }
-  else{ fromEl.style.transform=''; }
+/* Ease-out cubique */
+function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
-  toEl.style.transform=dir>0?'translateX(32px)':'translateX(-32px)';
-  toEl.style.opacity='0';
-  toEl.style.pointerEvents='none';
+/* Anime opacity ET translateX d'un élément en RAF */
+function animEl(el, fromOp, toOp, fromX, toX, onDone) {
+  const start = performance.now();
+  el.style.willChange = 'opacity, transform';
 
-  /* Reset animations */
-  toEl.querySelectorAll('[data-a]').forEach(el=>{
-    el.style.animation='none'; el.style.opacity='0';
+  (function step(now) {
+    const raw      = Math.min((now - start) / FADE_MS, 1);
+    const p        = easeOut(raw);
+    el.style.opacity   = fromOp + (toOp - fromOp) * p;
+    el.style.transform = 'translateX(' + (fromX + (toX - fromX) * p) + 'px)';
+    if (raw < 1) {
+      requestAnimationFrame(step);
+    } else {
+      el.style.opacity     = toOp;
+      el.style.transform   = toX === 0 ? 'none' : 'translateX(' + toX + 'px)';
+      el.style.willChange  = '';
+      if (onDone) onDone();
+    }
+  })(start);
+}
+
+function goTo(target) {
+  if (target === current || isAnimating) return;
+  isAnimating = true;
+
+  const fromEl  = document.getElementById('page-' + current);
+  const toEl    = document.getElementById('page-' + target);
+  const goRight = PAGES.indexOf(target) > PAGES.indexOf(current);
+
+  /* Positionner la page entrante : invisible, décalée */
+  toEl.classList.add('active');
+  toEl.style.opacity       = '0';
+  toEl.style.transform     = 'translateX(' + (goRight ? SLIDE_PX : -SLIDE_PX) + 'px)';
+  toEl.style.pointerEvents = 'none';
+  toEl.scrollTop = 0;
+
+  /* Reset data-a */
+  toEl.querySelectorAll('[data-a]').forEach(el => {
+    el.style.animation = 'none';
+    el.style.opacity   = '0';
   });
 
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    toEl.style.transform=''; toEl.style.opacity=''; toEl.style.pointerEvents='';
-    toEl.classList.add('active');
-    toEl.scrollTop=0;
-    /* Relancer data-a */
-    toEl.querySelectorAll('[data-a]').forEach(el=>{ el.style.animation=''; });
-    /* Relancer barres */
-    toEl.querySelectorAll('.dm-fill,.kpi-fill').forEach(el=>{
-      el.style.animation='none';
-      requestAnimationFrame(()=>{ el.style.animation=''; });
+  let done = 0;
+  function finish() {
+    if (++done < 2) return;
+    fromEl.classList.remove('active');
+    fromEl.style.opacity     = '0';
+    fromEl.style.transform   = 'none';
+    fromEl.style.pointerEvents = 'none';
+    toEl.style.pointerEvents   = 'all';
+    isAnimating = false;
+    /* Lancer animations contenu */
+    toEl.querySelectorAll('[data-a]').forEach(el => {
+      el.style.animation = '';
+      el.style.opacity   = '';
     });
-  }));
+    toEl.querySelectorAll('.dm-fill,.kpi-fill').forEach(el => {
+      el.style.animation = 'none';
+      requestAnimationFrame(() => { el.style.animation = ''; });
+    });
+  }
 
-  document.querySelectorAll('.bnav-item').forEach(b=>b.classList.toggle('active',b.dataset.target===target));
-  document.querySelectorAll('.pd').forEach(d=>d.classList.toggle('active',d.dataset.for===target));
-  current=target;
+  /* Les deux animations partent en même temps */
+  animEl(fromEl, 1, 0, 0, goRight ? -SLIDE_PX : SLIDE_PX, finish);
+  animEl(toEl,   0, 1, goRight ? SLIDE_PX : -SLIDE_PX, 0, finish);
 
-  setTimeout(()=>{
-    fromEl.classList.remove('exit-left');
-    fromEl.style.transform='';
-    isAnimating=false;
-  },400);
+  document.querySelectorAll('.bnav-item').forEach(b =>
+    b.classList.toggle('active', b.dataset.target === target)
+  );
+  document.querySelectorAll('.pd').forEach(d =>
+    d.classList.toggle('active', d.dataset.for === target)
+  );
+  current = target;
 }
 
 /* ── Swipe tactile ── */
