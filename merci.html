@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Demande transmise — R&C Pilotage</title>
+<meta name="robots" content="noindex"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="icon" type="image/x-icon" href="favicon.ico"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:      #07080a;
+  --surface: #101316;
+  --border:  rgba(255,255,255,0.055);
+  --border2: rgba(255,255,255,0.10);
+  --text:    #adb4bf;
+  --muted:   #52606e;
+  --gold:    #b08a50;
+  --goldb:   #c9a96e;
+  --goldline:rgba(176,138,80,0.20);
+  --golddim: rgba(176,138,80,0.07);
+  --white:   #dde2e9;
+  --serif:   'Cormorant Garamond', Georgia, serif;
+  --sans:    'Outfit', sans-serif;
+}
+html, body {
+  height: 100%; background: var(--bg); color: var(--text);
+  font-family: var(--sans); font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--gold); text-decoration: none; }
+
+/* NAV */
+.topnav {
+  position: fixed; top: 0; left: 0; right: 0; height: 58px;
+  background: rgba(7,8,10,0.92);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; z-index: 100;
+}
+.logo { font-family: var(--serif); font-size: 1rem; font-weight: 500; color: var(--white); }
+.logo em { color: var(--gold); font-style: normal; }
+
+/* CENTRAGE VERTICAL */
+.wrap {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 80px 24px 40px;
+}
+.card {
+  max-width: 480px; width: 100%;
+  text-align: center;
+}
+
+/* Icône checkmark animée */
+.check-wrap {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1.5px solid var(--goldline);
+  background: var(--golddim);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 32px;
+  animation: fadeIn 0.5s ease both;
+}
+.check-wrap svg {
+  width: 22px; height: 22px; stroke: var(--gold); fill: none;
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: drawCheck 0.5s ease 0.3s forwards;
+}
+@keyframes fadeIn  { from { opacity:0; transform:scale(0.9) } to { opacity:1; transform:scale(1) } }
+@keyframes drawCheck { to { stroke-dashoffset: 0; } }
+
+.overline {
+  font-size: 0.6rem; font-weight: 400; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--gold); opacity: 0.7;
+  display: block; margin-bottom: 16px;
+}
+.title {
+  font-family: var(--serif); font-size: clamp(1.9rem, 5vw, 2.6rem);
+  color: var(--white); font-weight: 300; line-height: 1.08;
+  letter-spacing: -0.3px; margin-bottom: 20px;
+}
+.title em { font-style: italic; color: var(--goldb); }
+.body {
+  font-size: 0.87rem; color: var(--muted); line-height: 1.8;
+  font-weight: 300; margin-bottom: 36px;
+}
+.body strong { color: var(--text); font-weight: 500; }
+
+/* Délai affiché */
+.delay-box {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: 2px; padding: 14px 20px; margin-bottom: 36px;
+}
+.delay-val {
+  font-family: var(--serif); font-size: 1.6rem; font-weight: 300; color: var(--gold);
+}
+.delay-label { font-size: 0.75rem; color: var(--muted); text-align: left; line-height: 1.4; }
+
+/* Séparateur */
+.sep { height: 1px; background: var(--border); margin: 28px 0; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 13px 28px; border-radius: 2px; font-weight: 600; font-size: 0.83rem;
+  border: none; font-family: var(--sans); letter-spacing: 0.5px;
+  background: var(--gold); color: var(--bg); cursor: pointer;
+  transition: background 0.2s; width: 100%;
+}
+.btn:hover { background: var(--goldb); }
+
+.footer { margin-top: 32px; font-size: 0.7rem; color: var(--muted); opacity: 0.4; }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <a href="index.html" class="logo">R<em>&</em>C Pilotage</a>
+</header>
+
+<div class="wrap">
+  <div class="card">
+
+    <div class="check-wrap">
+      <svg viewBox="0 0 24 24"><polyline points="5,12 10,17 19,7"/></svg>
+    </div>
+
+    <span class="overline">Demande reçue</span>
+    <h1 class="title">Votre demande a bien<br><em>été transmise.</em></h1>
+
+    <p class="body">
+      Je reviens vers vous dans les meilleurs délais pour un premier échange.<br>
+      <strong>Pas de réponse automatique — un retour direct et personnalisé.</strong>
+    </p>
+
+    <div class="delay-box">
+      <span class="delay-val">48h</span>
+      <span class="delay-label">Délai de réponse<br>habituel</span>
+    </div>
+
+    <div class="sep"></div>
+
+    <a href="index.html" class="btn">
+      Retourner au site
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+
+    <p class="footer">© 2026 R&C Pilotage · contact@rcpilotage.fr</p>
+
+  </div>
+</div>
+
+</body>
+</html>

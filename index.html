@@ -87,6 +87,7 @@ button { font-family: var(--sans); }
   transition: color 0.18s var(--ease); display: none;
 }
 .nav-link:hover { color: var(--white); }
+.nav-link.active { color: var(--white); opacity: 1; }
 .nav-cta {
   background: transparent; color: var(--gold);
   font-size: 0.7rem; font-weight: 500; padding: 6px 14px;
@@ -640,6 +641,44 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
   .inner { max-width: 860px; }
   .hero-t1, .hero-t2, .hero-t3 { font-size: clamp(3.6rem,6vw,7rem); letter-spacing: -3px; }
 }
+
+/* ─────────────────────────────────────
+   À PROPOS
+───────────────────────────────────── */
+.ap-block { margin-bottom: 4px; }
+.ap-block .body-text { margin-bottom: 0; }
+
+.ap-insight {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 2px; padding: 20px 18px; position: relative; margin: 4px 0;
+}
+.ap-insight-line {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 1.5px; background: var(--gold);
+}
+.ap-insight p {
+  font-family: var(--serif); font-size: 0.97rem; font-style: italic;
+  color: var(--white); line-height: 1.65; font-weight: 300; margin-bottom: 10px;
+}
+.ap-insight-sub {
+  font-family: var(--sans) !important; font-style: normal !important;
+  font-size: 0.8rem !important; color: var(--muted) !important;
+  line-height: 1.6 !important; margin-bottom: 0 !important;
+}
+
+.ap-pillars { display: flex; flex-direction: column; gap: 0; }
+.ap-pillar {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 16px 0; border-bottom: 1px solid var(--border);
+  transition: padding-left 0.22s var(--ease), background 0.18s var(--ease);
+}
+.ap-pillar:first-child { border-top: 1px solid var(--border); }
+.ap-pillar:hover { padding-left: 6px; background: rgba(176,138,80,0.018); }
+.ap-pillar-num {
+  font-family: var(--serif); font-size: 1.1rem; color: rgba(176,138,80,0.22);
+  font-weight: 300; flex-shrink: 0; width: 22px; padding-top: 1px;
+}
+.ap-pillar h4 { color: var(--white); font-size: 0.87rem; font-weight: 500; margin-bottom: 5px; }
+.ap-pillar p  { color: var(--muted); font-size: 0.79rem; line-height: 1.6; font-weight: 300; }
 </style>
 </head>
 <body>
@@ -656,10 +695,11 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
     </div>
   </button>
   <div class="nav-links">
-    <button class="nav-link" onclick="goTo('problemes')">Constat</button>
-    <button class="nav-link" onclick="goTo('services')">Services</button>
-    <button class="nav-link" onclick="goTo('methode')">Méthode</button>
-    <button class="nav-link" onclick="goTo('cas')">Cas</button>
+    <button class="nav-link" data-target="problemes" onclick="goTo('problemes')">Constat</button>
+    <button class="nav-link" data-target="services" onclick="goTo('services')">Services</button>
+    <button class="nav-link" data-target="methode" onclick="goTo('methode')">Méthode</button>
+    <button class="nav-link" data-target="cas" onclick="goTo('cas')">Cas</button>
+    <button class="nav-link" data-target="apropos" onclick="goTo('apropos')">À propos</button>
     <button class="nav-cta" onclick="goTo('contact')">Contact</button>
   </div>
 </header>
@@ -682,6 +722,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
           <div class="pd" data-for="services"></div>
           <div class="pd" data-for="methode"></div>
           <div class="pd" data-for="cas"></div>
+          <div class="pd" data-for="apropos"></div>
           <div class="pd" data-for="contact"></div>
         </div>
 
@@ -798,7 +839,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
     <div class="pdots" data-a="1" style="margin-bottom:32px">
       <div class="pd" data-for="accueil"></div><div class="pd active" data-for="problemes"></div>
       <div class="pd" data-for="services"></div><div class="pd" data-for="methode"></div>
-      <div class="pd" data-for="cas"></div><div class="pd" data-for="contact"></div>
+      <div class="pd" data-for="cas"></div><div class="pd" data-for="apropos"></div><div class="pd" data-for="contact"></div>
     </div>
     <span class="overline" data-a="2">Constat</span>
     <h2 class="heading" data-a="3">Vous reconnaissez-vous <em>ici ?</em></h2>
@@ -880,7 +921,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
     <div class="pdots" data-a="1" style="margin-bottom:32px">
       <div class="pd" data-for="accueil"></div><div class="pd" data-for="problemes"></div>
       <div class="pd active" data-for="services"></div><div class="pd" data-for="methode"></div>
-      <div class="pd" data-for="cas"></div><div class="pd" data-for="contact"></div>
+      <div class="pd" data-for="cas"></div><div class="pd" data-for="apropos"></div><div class="pd" data-for="contact"></div>
     </div>
     <span class="overline" data-a="2">Services</span>
     <h2 class="heading" data-a="3">Des interventions ciblées sur les <em>vrais points de friction.</em></h2>
@@ -964,7 +1005,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
     <div class="pdots" data-a="1" style="margin-bottom:32px">
       <div class="pd" data-for="accueil"></div><div class="pd" data-for="problemes"></div>
       <div class="pd" data-for="services"></div><div class="pd active" data-for="methode"></div>
-      <div class="pd" data-for="cas"></div><div class="pd" data-for="contact"></div>
+      <div class="pd" data-for="cas"></div><div class="pd" data-for="apropos"></div><div class="pd" data-for="contact"></div>
     </div>
     <span class="overline" data-a="2">Méthode</span>
     <h2 class="heading" data-a="3">Terrain. Direct. <em>Orienté résultat.</em></h2>
@@ -1013,7 +1054,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
     <div class="pdots" data-a="1" style="margin-bottom:32px">
       <div class="pd" data-for="accueil"></div><div class="pd" data-for="problemes"></div>
       <div class="pd" data-for="services"></div><div class="pd" data-for="methode"></div>
-      <div class="pd active" data-for="cas"></div><div class="pd" data-for="contact"></div>
+      <div class="pd active" data-for="cas"></div><div class="pd" data-for="apropos"></div><div class="pd" data-for="contact"></div>
     </div>
     <span class="overline" data-a="2">Cas terrain</span>
     <h2 class="heading" data-a="3">Des situations <em>réelles.</em></h2>
@@ -1096,13 +1137,103 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
   </div></section>
   </div>
 
+
+  <!-- ══ 7 · À PROPOS ══ -->
+  <div class="page" id="page-apropos" data-page="apropos">
+  <section class="section"><div class="inner">
+    <div class="pdots" data-a="1" style="margin-bottom:32px">
+            <div class="pd" data-for="accueil"></div><div class="pd" data-for="problemes"></div>
+      <div class="pd" data-for="services"></div><div class="pd" data-for="methode"></div>
+      <div class="pd" data-for="cas"></div><div class="pd active" data-for="apropos"></div><div class="pd" data-for="contact"></div>
+    </div>
+    <span class="overline" data-a="2">À propos</span>
+    <h2 class="heading" data-a="3">L'établissement que vous voyez.<br><em>Et celui que vous ne voyez plus.</em></h2>
+
+    <!-- Citation d'ouverture -->
+    <div class="quote" data-a="4" style="margin-bottom:28px">
+      <div class="quote-line"></div>
+      <p>Je n'apprécie pas particulièrement l'exercice qui consiste à parler de soi. Mais dans ce métier, la façon dont on observe un établissement compte souvent autant que les méthodes qu'on applique.</p>
+    </div>
+
+    <!-- Bloc parcours -->
+    <div class="ap-block" data-a="5">
+      <span class="overline" style="margin-bottom:12px">Parcours</span>
+      <p class="body-text">Mon parcours s'est construit dans des environnements exigeants et contrastés — restauration gastronomique, hôtellerie haut de gamme, brasserie multi-sites — avec une exposition constante aux deux côtés du problème : l'exécution terrain et la responsabilité opérationnelle. C'est cette double lecture qui a progressivement structuré mon approche.</p>
+      <p class="body-text" style="margin-top:10px">J'y ai exercé des responsabilités opérationnelles directes — management d'équipes, pilotage de la rentabilité, gestion multi-sites — avant de choisir de mettre cette lecture au service d'autres établissements.</p>
+    </div>
+
+    <div class="sep-warm"></div>
+
+    <!-- Observation centrale -->
+    <div class="ap-block" data-a="6">
+      <span class="overline" style="margin-bottom:12px">Ce que j'ai observé</span>
+      <p class="body-text" style="margin-bottom:12px">Ce qui m'a le plus frappé dans ces contextes, c'est la régularité des mêmes schémas. Derrière des concepts, des clientèles et des positionnements très différents, les déséquilibres opérationnels restent étonnamment similaires. Un restaurant gastronomique peut rencontrer les mêmes ruptures structurelles qu'une brasserie ou un traditionnel.</p>
+      <p class="body-text">La forme change. Les mécanismes de fond, beaucoup moins.</p>
+    </div>
+
+    <!-- Insight clé — encadré -->
+    <div class="ap-insight" data-a="7">
+      <div class="ap-insight-line"></div>
+      <p>Beaucoup d'établissements travaillent énormément — avec des équipes compétentes et investies — mais sans réelle visibilité sur ce qui freine ou ce qui coûte. Les problèmes deviennent réactifs au lieu d'être anticipés.</p>
+      <p class="ap-insight-sub">C'est précisément cette zone qui m'intéresse : le moment où un restaurant tourne, mais n'est plus réellement piloté.</p>
+    </div>
+
+    <div class="sep-warm"></div>
+
+    <!-- Approche -->
+    <div class="ap-block" data-a="8">
+      <span class="overline" style="margin-bottom:14px">Mon approche</span>
+      <div class="ap-pillars">
+        <div class="ap-pillar">
+          <span class="ap-pillar-num">01</span>
+          <div>
+            <h4>Observation concrète</h4>
+            <p>Analyse des flux réels, pas des déclarations. Ce qu'on voit sur le terrain prime sur ce qu'on décrit en réunion.</p>
+          </div>
+        </div>
+        <div class="ap-pillar">
+          <span class="ap-pillar-num">02</span>
+          <div>
+            <h4>Causes, pas symptômes</h4>
+            <p>Identifier ce qui produit le problème — pas corriger ce qui se voit en surface et qui réapparaîtra.</p>
+          </div>
+        </div>
+        <div class="ap-pillar">
+          <span class="ap-pillar-num">03</span>
+          <div>
+            <h4>Données mesurables</h4>
+            <p>Je ne fais pas confiance aux impressions, même les miennes. Les décisions fondées sur des indicateurs réels valent plus que les intuitions — y compris celles d'un professionnel expérimenté.</p>
+          </div>
+        </div>
+        <div class="ap-pillar">
+          <span class="ap-pillar-num">04</span>
+          <div>
+            <h4>Corrections durables</h4>
+            <p>L'objectif n'est pas un établissement idéal sur le papier — c'est une exploitation plus stable dans la réalité.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sep-warm"></div>
+
+    <!-- CTA final -->
+    <div class="quote" data-a="9">
+      <div class="quote-line"></div>
+      <p>Si votre situation ressemble à ce que je décris ici, un premier échange suffit souvent à savoir si une intervention a du sens.</p>
+    </div>
+    <button class="btn btn-gold" onclick="goTo('contact')" style="margin-top:12px">Demander un diagnostic →</button>
+    <div class="pb"></div>
+  </div></section>
+  </div>
+
   <!-- ══ 6 · CONTACT ══ -->
   <div class="page" id="page-contact" data-page="contact">
   <section class="section"><div class="inner">
     <div class="pdots" data-a="1" style="margin-bottom:32px">
       <div class="pd" data-for="accueil"></div><div class="pd" data-for="problemes"></div>
       <div class="pd" data-for="services"></div><div class="pd" data-for="methode"></div>
-      <div class="pd" data-for="cas"></div><div class="pd active" data-for="contact"></div>
+      <div class="pd" data-for="cas"></div><div class="pd" data-for="apropos"></div><div class="pd active" data-for="contact"></div>
     </div>
     <span class="overline" data-a="2">Contact</span>
     <h2 class="heading" data-a="3">Exposez votre <em>situation.</em></h2>
@@ -1122,6 +1253,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
     <form action="https://api.web3forms.com/submit" method="POST" id="contactForm" data-a="6">
       <input type="hidden" name="access_key" value="a960d6f8-1560-480f-bc2a-29e6d48c2d7f"/>
       <input type="hidden" name="subject" value="Nouvelle demande — R&C Pilotage"/>
+      <input type="hidden" name="redirect" value="https://rcpilotage.fr/merci.html"/>
       <input type="checkbox" name="botcheck" style="display:none"/>
 
       <div class="fg"><label>Nom et prénom *</label><input type="text" name="nom" required placeholder="Jean Dupont"/></div>
@@ -1163,7 +1295,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
       <label class="consent-row" onclick="toggleConsent()">
         <span class="consent-box" id="customCheck"></span>
         <input type="checkbox" id="consentBox" style="display:none"/>
-        <span>J'accepte que les informations transmises soient utilisées pour être recontacté au sujet de ma demande.</span>
+        <span>J'accepte que les informations transmises soient utilisées pour être recontacté au sujet de ma demande — conformément à la <a href="mentions-legales.html" target="_blank" style="color:var(--gold);text-decoration:underline;text-underline-offset:2px">politique de confidentialité</a>.</span>
       </label>
       <p id="errConsent" class="err" style="margin-bottom:12px">Veuillez accepter les conditions.</p>
 
@@ -1173,7 +1305,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
       </button>
     </form>
 
-    <div class="footer">© 2026 R&C Pilotage · <a href="mailto:contact@rcpilotage.fr">contact@rcpilotage.fr</a></div>
+    <div class="footer">© 2026 R&C Pilotage · <a href="mailto:contact@rcpilotage.fr">contact@rcpilotage.fr</a> · <a href="mentions-legales.html">Mentions légales</a></div>
     <div class="pb"></div>
   </div></section>
   </div>
@@ -1202,6 +1334,10 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
     <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
     <span>Cas</span>
   </button>
+  <button class="bnav-item" data-target="apropos" onclick="goTo('apropos')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+    <span>Profil</span>
+  </button>
   <button class="bnav-item" data-target="contact" onclick="goTo('contact')">
     <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
     <span>Contact</span>
@@ -1222,7 +1358,7 @@ if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostn
 })();
 
 /* ── Moteur de pages — RAF fondu + glissement simultané ── */
-const PAGES = ['accueil','problemes','services','methode','cas','contact'];
+const PAGES = ['accueil','problemes','services','methode','cas','apropos','contact'];
 let current = 'accueil';
 let isAnimating = false;
 
@@ -1299,6 +1435,9 @@ function goTo(target) {
   animEl(toEl,   0, 1, goRight ? SLIDE_PX : -SLIDE_PX, 0, finish);
 
   document.querySelectorAll('.bnav-item').forEach(b =>
+    b.classList.toggle('active', b.dataset.target === target)
+  );
+  document.querySelectorAll('.nav-link').forEach(b =>
     b.classList.toggle('active', b.dataset.target === target)
   );
   document.querySelectorAll('.pd').forEach(d =>
