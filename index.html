@@ -228,7 +228,7 @@ h2.heading em { font-style: italic; color: var(--goldb); }
   width: 55vw; height: 55vw; max-width: 440px; max-height: 440px;
   border-radius: 50%; pointer-events: none; z-index: 0;
   background: radial-gradient(circle, rgba(176,138,80,0.042) 0%, transparent 68%);
-  animation: breathe 7s var(--drift) infinite;
+  animation: breathe 9s var(--drift) infinite;
   filter: blur(1px);
 }
 /* Halo accent haut-droite — très discret */
@@ -237,7 +237,7 @@ h2.heading em { font-style: italic; color: var(--goldb); }
   width: 35vw; height: 35vw; max-width: 280px; max-height: 280px;
   border-radius: 50%; pointer-events: none; z-index: 0;
   background: radial-gradient(circle, rgba(176,138,80,0.018) 0%, transparent 70%);
-  animation: breathe 11s var(--drift) 3.5s infinite;
+  animation: breathe 14s var(--drift) 4.5s infinite;
 }
 .hero-content { position: relative; z-index: 1; }
 
@@ -255,7 +255,7 @@ h2.heading em { font-style: italic; color: var(--goldb); }
 /* Titre — 3 lignes, poids contrastés */
 .hero-t1 { font-family: var(--serif); font-size: clamp(2.8rem,10vw,5.5rem); color: var(--white); line-height: 0.95; font-weight: 300; letter-spacing: -2px; display: block; }
 .hero-t2 { font-family: var(--serif); font-size: clamp(2.8rem,10vw,5.5rem); color: rgba(255,255,255,0.18); line-height: 0.95; font-weight: 300; letter-spacing: -2px; display: block; margin-top: 5px; font-style: italic; }
-.hero-t3 { font-family: var(--serif); font-size: clamp(2.8rem,10vw,5.5rem); color: var(--goldb); line-height: 0.95; font-weight: 300; letter-spacing: -2px; display: block; margin-top: 5px; font-style: italic; }
+.hero-t3 { font-family: var(--serif); font-size: clamp(3.2rem,11.5vw,6.2rem); color: var(--goldb); line-height: 0.95; font-weight: 300; letter-spacing: -3px; display: block; margin-top: 5px; font-style: italic; }
 
 .hero-sub { font-size: 0.86rem; color: var(--muted); line-height: 1.78; font-weight: 300; max-width: 340px; }
 
@@ -312,9 +312,9 @@ h2.heading em { font-style: italic; color: var(--goldb); }
 
 /* Boutons */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 13px 24px; border-radius: 2px; font-weight: 500; font-size: 0.83rem; border: none; font-family: var(--sans); width: 100%; letter-spacing: 0.5px; -webkit-tap-highlight-color: transparent; }
-.btn-gold  { background: var(--gold); color: var(--bg); font-weight: 600; transition: background 0.22s var(--ease), transform 0.22s var(--snap), box-shadow 0.22s var(--ease); }
-.btn-gold:hover  { background: var(--goldb); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(176,138,80,0.22); }
-.btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border2); transition: border-color 0.22s var(--ease), color 0.22s var(--ease), background 0.22s var(--ease); }
+.btn-gold  { background: var(--gold); color: var(--bg); font-weight: 600; transition: background 0.35s var(--cinematic), transform 0.35s var(--cinematic), box-shadow 0.35s var(--cinematic); }
+.btn-gold:hover  { background: var(--goldb); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(176,138,80,0.26); }
+.btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border2); transition: border-color 0.30s var(--swift), color 0.30s var(--swift), background 0.30s var(--swift); }
 .btn-ghost:hover { border-color: var(--goldline); color: var(--white); background: rgba(176,138,80,0.04); }
 .btn:active { transform: scale(0.985); }
 
@@ -332,7 +332,7 @@ h2.heading em { font-style: italic; color: var(--goldb); }
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 2px; padding: 14px 13px;
   display: flex; flex-direction: column; gap: 4px;
-  transition: border-color 0.22s var(--ease), background 0.22s var(--ease), transform 0.18s var(--ease);
+  transition: border-color 0.30s var(--swift), background 0.30s var(--swift), transform 0.28s var(--cinematic);
   -webkit-tap-highlight-color: transparent;
 }
 .nav-card:hover { border-color: var(--goldline); background: var(--surf2); transform: translateY(-1px); }
@@ -755,7 +755,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
             </div>
             <div class="dash-kpi">
               <span class="dash-val mid">34.7%</span>
-              <span class="dash-lbl">Masse sal.</span>
+              <span class="dash-lbl">Masse salariale</span>
               <span class="dash-delta flat">→ stable</span>
             </div>
             <div class="dash-kpi">
@@ -783,10 +783,10 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
 
         <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:36px" data-a="7">
           <button class="btn btn-gold" onclick="goTo('contact')">
-            Demander un diagnostic
+            Analyser mon exploitation
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
-          <button class="btn btn-ghost" onclick="goTo('problemes')">Évaluer votre exploitation →</button>
+          <button class="btn btn-ghost" onclick="goTo('problemes')">Observer vos points de friction →</button>
         </div>
 
         <div class="hero-metrics" data-a="8">
@@ -902,15 +902,14 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
     <!-- Note méthodologique — compressée -->
     <div class="methodo-note" data-a="7">
       <span class="overline" style="margin-bottom:12px">Note méthodologique</span>
-      <p class="body-text">Ces données reposent sur des schémas fréquemment observés en restauration — pas sur des vérités absolues. Chaque établissement a ses spécificités. Ce qui varie, c'est souvent la forme du problème : niveau d'exigence, volume, complexité. Le fond opérationnel, lui, reste souvent comparable d'un établissement à l'autre.</p>
-      <p class="body-text" style="margin-top:10px">Les mêmes schémas apparaissent souvent dans des contextes très différents — c'est précisément ce qui permet d'identifier des leviers de correction pertinents, adaptés à chaque situation.</p>
+      <p class="body-text">Ces données reflètent des tendances observées — pas des vérités absolues. La forme des problèmes varie selon les établissements. Le fond opérationnel, lui, reste souvent comparable.</p>
     </div>
 
     <div class="quote" data-a="8">
       <div class="quote-line"></div>
       <p>Si vous vous reconnaissez ici, un regard externe vous serait probablement utile.</p>
     </div>
-    <button class="btn btn-gold" onclick="goTo('services')" data-a="9" style="margin-top:8px">Voir les interventions →</button>
+    <button class="btn btn-gold" onclick="goTo('services')" data-a="9" style="margin-top:8px">Explorer les interventions →</button>
     <div class="pb"></div>
   </div></section>
   </div>
@@ -948,7 +947,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
         <span class="kpi-val">68 – 72%</span><span class="kpi-delta up">Objectif ✓</span>
       </div>
       <div class="kpi-row">
-        <span class="kpi-name">Pertes matières</span>
+        <span class="kpi-name">Pertes matière</span>
         <div class="kpi-bar"><div class="kpi-track"><div class="kpi-fill r" style="--w:55%;width:var(--w)"></div></div></div>
         <span class="kpi-val">> 8%</span><span class="kpi-delta down">Alerte ↑</span>
       </div>
@@ -994,7 +993,8 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
       <div class="outcome"><span class="out-letter">C</span><h3>Recul</h3><p>Vous entrez dans une logique de pilotage.</p></div>
     </div>
     <div class="sep"></div>
-    <button class="btn btn-gold" onclick="goTo('methode')" data-a="9">Comprendre l'approche →</button>
+    <button class="btn btn-gold" onclick="goTo('contact')" data-a="9">Évaluer ma situation →</button>
+    <button class="btn btn-ghost" onclick="goTo('methode')" style="margin-top:8px">Comprendre la méthode →</button>
     <div class="pb"></div>
   </div></section>
   </div>
@@ -1030,20 +1030,13 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
     <div class="sep-warm"></div>
     <span class="overline" data-a="7">Pourquoi R&C Pilotage</span>
     <div data-a="7">
-      <div class="why-item"><h3>Continuer seul a un coût</h3><p>Chaque mois sans correction, c'est un mois de pertes et d'énergie gaspillée. Ce coût est réel, même quand il est invisible.</p></div>
-      <div class="why-item"><h3>Le regard externe voit ce que l'interne ne voit plus</h3><p>On finit par s'adapter à ce qui dysfonctionne. Un regard extérieur observe ce que vous avez arrêté de voir.</p></div>
-      <div class="why-item"><h3>La méthode change plus que la motivation</h3><p>Un problème d'organisation ne se résout pas avec de la bonne volonté — mais avec une structure et des priorités bien hiérarchisées.</p></div>
+      <div class="why-item"><h3>Continuer seul a un coût</h3><p>Chaque mois sans correction est un mois de pertes réelles — même quand elles restent invisibles.</p></div>
+      <div class="why-item"><h3>Le regard externe voit ce que l'interne ne voit plus</h3><p>On s'adapte toujours à ce qui dysfonctionne. Un regard extérieur voit ce que vous avez arrêté de voir.</p></div>
+      <div class="why-item"><h3>La méthode change plus que la motivation</h3><p>La bonne volonté ne résout pas un problème d'organisation. Une structure et des priorités hiérarchisées, si.</p></div>
     </div>
 
-    <div class="sep-warm"></div>
-    <span class="overline" data-a="8">À propos</span>
-    <div class="about-card" data-a="8">
-      <p>R&C Pilotage s'adresse aux établissements qui veulent <strong>sortir d'un fonctionnement subi</strong> pour entrer dans une logique de maîtrise opérationnelle.</p>
-      <p>J'arrive avec un regard structuré — capable de voir ce que les gens de l'intérieur ne voient plus. Non pas parce qu'ils sont incompétents, mais parce qu'ils sont <strong>dedans</strong>.</p>
-      <p>Je viens sur le terrain, j'identifie ce qui coûte et ce qui freine, je propose des corrections concrètes. <strong>L'objectif n'est pas rassurant. Il est utile.</strong></p>
-    </div>
     <div class="sep"></div>
-    <button class="btn btn-gold" onclick="goTo('cas')" data-a="9">Consulter les cas terrain →</button>
+    <button class="btn btn-gold" onclick="goTo('cas')" data-a="9">Lire les cas terrain →</button>
     <div class="pb"></div>
   </div></section>
   </div>
@@ -1099,8 +1092,8 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
           </div>
         </div>
         <div class="case-result">
-          <span class="case-result-val">+Stabilité</span>
-          <span class="case-result-desc">Mise en place de procédures et d'une répartition claire des responsabilités. Service stabilisé <strong>indépendamment des absences</strong>.</span>
+          <span class="case-result-val" style="font-size:0.95rem;line-height:1.2">Zéro<br>dégradation</span>
+          <span class="case-result-desc">Service maintenu à niveau constant lors de <strong>3 absences consécutives du responsable</strong> dans les 4 semaines suivant la mise en place.</span>
         </div>
       </div>
 
@@ -1132,7 +1125,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
       <div class="quote-line"></div>
       <p>Ces schémas se répètent. Les contextes changent — la logique sous-jacente reste souvent la même.</p>
     </div>
-    <button class="btn btn-gold" onclick="goTo('contact')" data-a="7" style="margin-top:8px">Demander un diagnostic →</button>
+    <button class="btn btn-gold" onclick="goTo('contact')" data-a="7" style="margin-top:8px">Initier un premier échange →</button>
     <div class="pb"></div>
   </div></section>
   </div>
@@ -1222,7 +1215,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
       <div class="quote-line"></div>
       <p>Si votre situation ressemble à ce que je décris ici, un premier échange suffit souvent à savoir si une intervention a du sens.</p>
     </div>
-    <button class="btn btn-gold" onclick="goTo('contact')" style="margin-top:12px">Demander un diagnostic →</button>
+    <button class="btn btn-gold" onclick="goTo('contact')" style="margin-top:12px">Initier un premier échange →</button>
     <div class="pb"></div>
   </div></section>
   </div>
@@ -1362,7 +1355,7 @@ const PAGES = ['accueil','problemes','services','methode','cas','apropos','conta
 let current = 'accueil';
 let isAnimating = false;
 
-const FADE_MS = 700;  /* durée — perceptible et élégant */
+const FADE_MS = 550;  /* durée — fluide et perceptible */
 const SLIDE_PX = 30;  /* glissement horizontal en pixels */
 
 /* Ease-out cubique */
@@ -1464,7 +1457,7 @@ pw.addEventListener('wheel',e=>{
   const a=document.querySelector('.page.active');
   if(a){
     /* Inertie douce — pas de saut brutal */
-    a.scrollTop += e.deltaY * 0.92;
+    a.scrollTop += e.deltaY * 0.85;
     e.preventDefault();
   }
 },{passive:false});
