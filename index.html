@@ -284,7 +284,7 @@ h2.heading em { font-style: italic; color: var(--goldb); }
 .dash-kpis { display: grid; grid-template-columns: repeat(3,1fr); }
 .dash-kpi  { padding: 14px 10px; border-right: 1px solid var(--border); text-align: center; }
 .dash-kpi:last-child { border-right: none; }
-.dash-val  { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; display: block; line-height: 1; margin-bottom: 3px; }
+.dash-val  { font-family: var(--sans); font-size: 1.55rem; font-weight: 300; display: block; line-height: 1; margin-bottom: 3px; letter-spacing: -0.5px; }
 .dash-val.ok  { color: var(--green); }
 .dash-val.mid { color: var(--goldb); }
 .dash-val.bad { color: var(--red);   }
@@ -322,7 +322,7 @@ h2.heading em { font-style: italic; color: var(--goldb); }
 .hero-metrics { display: flex; gap: 0; border-top: 1px solid var(--border); padding-top: 22px; }
 .hm { flex: 1; }
 .hm + .hm { border-left: 1px solid var(--border); padding-left: 20px; }
-.hm-val  { font-family: var(--serif); font-size: 1.45rem; font-weight: 300; color: var(--white); display: block; line-height: 1; margin-bottom: 5px; }
+.hm-val  { font-family: var(--sans); font-size: 1.35rem; font-weight: 300; color: var(--white); display: block; line-height: 1; margin-bottom: 5px; letter-spacing: -0.5px; }
 .hm-val em { color: var(--goldb); font-style: normal; }
 .hm-lbl  { font-size: 0.6rem; color: var(--muted); letter-spacing: 0.3px; line-height: 1.45; }
 
@@ -370,7 +370,7 @@ h2.heading em { font-style: italic; color: var(--goldb); }
 .data-item { display: flex; align-items: baseline; gap: 14px; padding: 13px 16px; border-bottom: 1px solid var(--border); transition: background 0.18s var(--ease); }
 .data-item:last-child { border-bottom: none; }
 .data-item:hover { background: var(--surf2); }
-.data-num  { font-family: var(--serif); font-size: 1.45rem; font-weight: 300; color: var(--goldb); line-height: 1; flex-shrink: 0; min-width: 54px; }
+.data-num  { font-family: var(--sans); font-size: 1.3rem; font-weight: 300; color: var(--goldb); line-height: 1; flex-shrink: 0; min-width: 54px; letter-spacing: -0.5px; }
 .data-desc { font-size: 0.77rem; color: var(--text); line-height: 1.6; font-weight: 300; }
 .data-desc em { color: var(--muted); font-style: normal; font-size: 0.72rem; display: block; margin-top: 2px; }
 
@@ -448,7 +448,7 @@ h2.heading em { font-style: italic; color: var(--goldb); }
   display: flex; align-items: center; gap: 16px;
   padding: 12px 16px; background: rgba(61,171,107,0.04);
 }
-.case-result-val { font-family: var(--serif); font-size: 1.3rem; font-weight: 300; color: var(--green); flex-shrink: 0; }
+.case-result-val { font-family: var(--sans); font-size: 1.2rem; font-weight: 300; color: var(--green); flex-shrink: 0; letter-spacing: -0.3px; }
 .case-result-desc { font-size: 0.74rem; color: var(--muted); line-height: 1.5; font-weight: 300; }
 .case-result-desc strong { color: var(--text); font-weight: 400; }
 
@@ -469,7 +469,7 @@ h2.heading em { font-style: italic; color: var(--goldb); }
 .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 2px; padding: 15px 14px; transition: border-color 0.20s var(--ease); }
 .stat-card:hover { border-color: var(--goldline); }
-.stat-val  { font-family: var(--serif); font-size: 1.9rem; font-weight: 300; color: var(--white); display: block; line-height: 1; margin-bottom: 5px; }
+.stat-val  { font-family: var(--sans); font-size: 1.75rem; font-weight: 300; color: var(--white); display: block; line-height: 1; margin-bottom: 5px; letter-spacing: -0.5px; }
 .stat-val em { color: var(--goldb); font-style: normal; }
 .stat-lbl  { font-size: 0.66rem; color: var(--muted); line-height: 1.4; }
 
@@ -751,7 +751,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
             <div class="dash-kpi">
               <span class="dash-val ok">28.4%</span>
               <span class="dash-lbl">Food cost</span>
-              <span class="dash-delta up">↓ −2.1 pts</span>
+              <span class="dash-delta up">↓ −1.6 pts</span>
             </div>
             <div class="dash-kpi">
               <span class="dash-val mid">34.7%</span>
@@ -770,7 +770,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
               <div class="dm-track"><div class="dm-fill ok" style="--w:94.7%;width:var(--w)"></div></div>
             </div>
             <div>
-              <div class="dm-head"><span>Marge nette · cible 14%</span><strong class="bad">11.2% ↑</strong></div>
+              <div class="dm-head"><span>Marge nette · cible 14%</span><strong class="bad">11.2% — écart 2.8 pts</strong></div>
               <div class="dm-track"><div class="dm-fill bad" style="--w:80%;width:var(--w)"></div></div>
             </div>
           </div>
@@ -791,8 +791,8 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
 
         <div class="hero-metrics" data-a="8">
           <div class="hm">
-            <span class="hm-val">−<em>14</em>%</span>
-            <span class="hm-lbl">Food cost après<br>intervention</span>
+            <span class="hm-val">−<em>8</em> pts</span>
+            <span class="hm-lbl">Food cost réduit en<br>moyenne (cas observés)</span>
           </div>
           <div class="hm">
             <span class="hm-val"><em>2–4</em> sem.</span>
@@ -895,7 +895,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
       </div>
       <div class="data-item">
         <span class="data-num">4 / 5</span>
-        <span class="data-desc">Restaurateurs dont les dysfonctionnements identifiés sont liés à l'organisation — pas au personnel ni au marché.<em>Biais de confirmation fréquent chez les exploitants.</em></span>
+        <span class="data-desc">Restaurateurs dont les dysfonctionnements identifiés sont liés à l'organisation — pas au personnel ni au marché.<em>Angle mort fréquent chez les exploitants.</em></span>
       </div>
     </div>
 
@@ -990,7 +990,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
     <span class="overline" data-a="7">Ce que ça change</span>
     <div class="outcomes" data-a="8">
       <div class="outcome"><span class="out-letter">A</span><h3>Clarté</h3><p>Vous savez ce qui fonctionne et ce qui dysfonctionne.</p></div>
-      <div class="outcome"><span class="out-letter">B</span><h3>Structure</h3><p>L'exploitation moins dépendante des individus.</p></div>
+      <div class="outcome"><span class="out-letter">B</span><h3>Structure</h3><p>Une exploitation moins dépendante des individus.</p></div>
       <div class="outcome"><span class="out-letter">C</span><h3>Recul</h3><p>Vous entrez dans une logique de pilotage.</p></div>
     </div>
     <div class="sep"></div>
@@ -1021,7 +1021,7 @@ textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
     </div>
 
     <div class="stat-grid" data-a="6">
-      <div class="stat-card"><span class="stat-val">−<em>14</em>%</span><span class="stat-lbl">Réduction food cost après standardisation</span></div>
+      <div class="stat-card"><span class="stat-val">−<em>8</em> pts</span><span class="stat-lbl">Food cost moyen réduit après standardisation (cas observés)</span></div>
       <div class="stat-card"><span class="stat-val"><em>2–4</em> sem.</span><span class="stat-lbl">Diagnostic → premières actions terrain</span></div>
       <div class="stat-card"><span class="stat-val"><em>4/5</em></span><span class="stat-lbl">Restaurateurs dont les problèmes viennent de l'organisation</span></div>
       <div class="stat-card"><span class="stat-val"><em>CHR</em></span><span class="stat-lbl">Spécialité unique — restauration, hôtellerie</span></div>
