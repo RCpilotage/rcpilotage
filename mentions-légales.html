@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentions légales — R&C Pilotage</title>
+<meta name="description" content="Mentions légales et politique de confidentialité.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --noir:#0A0A0A;
+  --anthracite:#0F0F0F;
+  --blanc:#F1F0EB;
+  --blanc-2:#EBEAE3;
+  --encre:#121211;
+  --encre-2:#54544E;
+  --encre-3:#8C8C83;
+  --acier:#9A9FA4;
+  --acier-2:#70747A;
+  --l-l:rgba(18,18,17,.15);
+  --l-l2:rgba(18,18,17,.38);
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--blanc);color:var(--encre);font-family:var(--sans);font-weight:400;font-size:1rem;line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:var(--encre);color:var(--blanc)}
+a{color:var(--encre);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px;transition:color .3s}
+a:hover{color:var(--acier-2)}
+
+/* NAV */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1.4rem var(--pad-x);border-bottom:1px solid var(--l-l);background:var(--blanc);--pad-x:clamp(1.4rem,6vw,7rem)}
+.brand{font-family:var(--serif);font-weight:600;font-size:1.22rem;color:var(--encre);text-decoration:none}
+.brand:hover{color:var(--encre)}
+.brand small{display:block;font-family:var(--sans);font-weight:500;font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--acier-2);margin-top:.2rem}
+.nav-back{font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--acier-2);text-decoration:none}
+.nav-back:hover{color:var(--encre)}
+
+/* PAGE */
+.wrap{max-width:680px;margin:0 auto;padding:clamp(3rem,8vw,5rem) var(--pad-x) 4rem;--pad-x:clamp(1.4rem,6vw,7rem)}
+
+h1{font-family:var(--serif);font-weight:500;font-size:clamp(2rem,4vw,2.8rem);line-height:1.1;letter-spacing:-.01em;margin-bottom:.8rem}
+h1 em{font-style:italic;font-weight:500}
+.page-date{font-size:.66rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--acier-2);margin-bottom:2.4rem}
+
+.sep{height:1px;background:var(--l-l);margin:2.8rem 0}
+
+/* SECTIONS */
+.ml-section{margin-bottom:2.6rem}
+.ml-section:last-child{margin-bottom:0}
+
+.ml-heading{font-size:.6rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--acier-2);display:block;margin-bottom:1.1rem;padding-bottom:.85rem;border-bottom:1px solid var(--l-l)}
+
+.ml-block{background:var(--blanc-2);border:1px solid var(--l-l);border-radius:0;overflow:hidden}
+.ml-row{display:flex;align-items:flex-start;gap:1.6rem;padding:1.1rem 1.4rem;border-bottom:1px solid var(--l-l)}
+.ml-row:last-child{border-bottom:none}
+.ml-label{font-size:.66rem;color:var(--acier-2);letter-spacing:.1em;text-transform:uppercase;min-width:120px;flex-shrink:0;font-weight:500}
+.ml-val{font-size:.88rem;color:var(--encre-2);line-height:1.7;font-weight:400}
+.ml-val strong{color:var(--encre);font-weight:500}
+
+.ml-text{font-size:.88rem;color:var(--encre-2);line-height:1.8;font-weight:400;margin-bottom:.9rem}
+.ml-text:last-child{margin-bottom:0}
+.ml-text strong{color:var(--encre);font-weight:500}
+
+.legal-note{margin-top:2.4rem;padding:1.3rem 1.4rem;border:1px solid var(--l-l);border-radius:0;background:var(--blanc)}
+.legal-note p{font-size:.8rem;color:var(--acier-2);line-height:1.65}
+
+/* FOOTER */
+.page-footer{margin-top:2.8rem;padding-top:1.4rem;border-top:1px solid var(--l-l);text-align:center;font-size:.68rem;color:var(--acier-2)}
+.page-footer a{color:var(--acier-2);text-decoration:none;transition:color .3s}
+.page-footer a:hover{color:var(--encre)}
+
+/* RESPONSIVE */
+@media (max-width:640px){
+  .nav{flex-direction:column;gap:.8rem;text-align:center;padding:1.1rem var(--pad-x)}
+  .ml-row{flex-direction:column;gap:.6rem}
+  .ml-label{min-width:auto}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a href="index.html" class="brand">R&C Pilotage<small>Conseil opérationnel CHR</small></a>
+  <a href="index.html" class="nav-back">← Retour au site</a>
+</header>
+
+<main class="wrap">
+
+  <h1>Mentions légales<br><em>& confidentialité</em></h1>
+  <p class="page-date">Mise à jour · mai 2026</p>
+
+  <div class="ml-section">
+    <span class="ml-heading">Éditeur du site</span>
+    <div class="ml-block">
+      <div class="ml-row">
+        <span class="ml-label">Raison sociale</span>
+        <span class="ml-val"><strong>R&C Pilotage</strong> · Conseil opérationnel en restauration</span>
+      </div>
+      <div class="ml-row">
+        <span class="ml-label">Responsable</span>
+        <span class="ml-val">Ryan C. · Consultant indépendant</span>
+      </div>
+      <div class="ml-row">
+        <span class="ml-label">Localisation</span>
+        <span class="ml-val">Bas-Rhin (67), Alsace · France</span>
+      </div>
+      <div class="ml-row">
+        <span class="ml-label">Contact</span>
+        <span class="ml-val"><a href="mailto:contact@rcpilotage.fr">contact@rcpilotage.fr</a></span>
+      </div>
+      <div class="ml-row">
+        <span class="ml-label">Site web</span>
+        <span class="ml-val"><a href="https://rcpilotage.fr">rcpilotage.fr</a></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ml-section">
+    <span class="ml-heading">Hébergeur</span>
+    <div class="ml-block">
+      <div class="ml-row">
+        <span class="ml-label">Nom</span>
+        <span class="ml-val"><strong>GitHub, Inc.</strong></span>
+      </div>
+      <div class="ml-row">
+        <span class="ml-label">Adresse</span>
+        <span class="ml-val">88 Colin P Kelly Jr Street, San Francisco, CA 94107 · États-Unis</span>
+      </div>
+      <div class="ml-row">
+        <span class="ml-label">Service</span>
+        <span class="ml-val">GitHub Pages · hébergement statique</span>
+      </div>
+      <div class="ml-row">
+        <span class="ml-label">Docs</span>
+        <span class="ml-val"><a href="https://pages.github.com" target="_blank">pages.github.com</a></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="ml-section">
+    <span class="ml-heading">Données personnelles</span>
+    <p class="ml-text">Le formulaire de contact collecte : <strong>nom et prénom, adresse e-mail, ville, établissement, type, urgence, sujets, problème rencontré et résultat cherché.</strong></p>
+    <p class="ml-text"><strong>Finalité unique :</strong> répondre à votre demande et évaluer si une intervention est pertinente. Pas de prospection, pas de newsletter, pas de transmission à des tiers.</p>
+    <p class="ml-text">Les données sont transmises via <strong>Web3Forms</strong> (web3forms.com) et reçues par e-mail. Aucun stockage dans une base de données tierce accessible à des partenaires commerciaux.</p>
+  </div>
+
+  <div class="ml-section">
+    <span class="ml-heading">Durée de conservation</span>
+    <div class="ml-block">
+      <div class="ml-row">
+        <span class="ml-label">Sans suite</span>
+        <span class="ml-val">Supprimées sous <strong>3 mois</strong> après le dernier échange.</span>
+      </div>
+      <div class="ml-row">
+        <span class="ml-label">Suivies</span>
+        <span class="ml-val">Conservées pendant la relation, puis supprimées <strong>12 mois</strong> après la fin de la mission.</span>
+      </div>
+      <div class="ml-row">
+        <span class="ml-label">Suppression anticipée</span>
+        <span class="ml-val">Sur demande par e-mail à <a href="mailto:contact@rcpilotage.fr">contact@rcpilotage.fr</a>.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ml-section">
+    <span class="ml-heading">Vos droits (RGPD)</span>
+    <p class="ml-text">Conformément au Règlement Général sur la Protection des Données (RGPD · UE 2016/679), vous disposez des droits suivants :</p>
+    <div class="ml-block" style="margin-top:.8rem">
+      <div class="ml-row">
+        <span class="ml-label">Accès</span>
+        <span class="ml-val">Obtenir la confirmation que vos données sont traitées et en recevoir une copie.</span>
+      </div>
+      <div class="ml-row">
+        <span class="ml-label">Rectification</span>
+        <span class="ml-val">Demander la correction de données inexactes ou incomplètes.</span>
+      </div>
+      <div class="ml-row">
+        <span class="ml-label">Effacement</span>
+        <span class="ml-val">Demander la suppression de vos données (droit à l'oubli).</span>
+      </div>
+      <div class="ml-row">
+        <span class="ml-label">Opposition</span>
+        <span class="ml-val">Vous opposer au traitement de vos données à tout moment.</span>
+      </div>
+      <div class="ml-row">
+        <span class="ml-label">Exercice</span>
+        <span class="ml-val">Par e-mail à <a href="mailto:contact@rcpilotage.fr">contact@rcpilotage.fr</a> · réponse sous 30 jours.</span>
+      </div>
+      <div class="ml-row">
+        <span class="ml-label">Réclamation</span>
+        <span class="ml-val">Vous pouvez saisir la <a href="https://www.cnil.fr/" target="_blank">CNIL</a> en cas de litige.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="ml-section">
+    <span class="ml-heading">Cookies & traceurs</span>
+    <p class="ml-text">Ce site <strong>n'utilise aucun cookie</strong> de suivi, d'analyse ou publicitaire. Aucun outil de mesure d'audience (Google Analytics, etc.) n'est installé. Aucune donnée de navigation n'est collectée à votre insu.</p>
+    <p class="ml-text">GitHub Pages génère des logs techniques d'accès (adresse IP, navigateur, date/heure). Ces données sont conservées par GitHub conformément à leur <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank">politique de confidentialité</a>.</p>
+  </div>
+
+  <div class="ml-section">
+    <span class="ml-heading">Propriété intellectuelle</span>
+    <p class="ml-text">L'ensemble du contenu de ce site · textes, structure, identité visuelle · est la propriété exclusive de R&C Pilotage. Toute reproduction, même partielle, sans autorisation préalable est interdite.</p>
+  </div>
+
+  <div class="legal-note">
+    <p>Ces mentions légales ont été rédigées de bonne foi pour répondre aux obligations du RGPD et de la loi française Informatique et Libertés. Pour toute question, contactez <a href="mailto:contact@rcpilotage.fr">contact@rcpilotage.fr</a>.</p>
+  </div>
+
+  <div class="page-footer">
+    <p>© 2026 R&C Pilotage · <a href="index.html">Retour au site</a></p>
+  </div>
+
+</main>
+</body>
+</html>
