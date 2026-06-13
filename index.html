@@ -464,6 +464,8 @@ body.loaded .trace-pt{opacity:1}
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%239A9FA4' stroke-width='1.3'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right .95rem center;padding-right:2.4rem;
 }
+.fld select option{background:var(--noir);color:var(--blanc)}
+.fld select option:checked{background:var(--noir);color:var(--blanc);font-weight:500}
 .pills{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.15rem}
 .pill{position:relative}
 .pill input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
@@ -1024,7 +1026,7 @@ body.loaded .trace-pt{opacity:1}
       </div>
 
       <form class="form reveal" data-d="2" action="https://api.web3forms.com/submit" method="POST">
-        <input type="hidden" name="access_key" value="VOTRE_CLE_WEB3FORMS">
+        <input type="hidden" name="access_key" value="a960d6f8-1560-480f-bcza-29e6d48c2d7f">
         <input type="hidden" name="subject" value="Nouvelle demande · rcpilotage.fr">
         <input type="hidden" name="redirect" value="https://rcpilotage.fr/merci.html">
         <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
@@ -1101,7 +1103,7 @@ body.loaded .trace-pt{opacity:1}
 
         <label class="consent">
           <input type="checkbox" required>
-          <span>J’accepte que les informations transmises soient utilisées pour être recontacté au sujet de ma demande, conformément à la <a href="https://rcpilotage.fr/mentions-legales.html">politique de confidentialité</a>.</span>
+          <span>J’accepte que les informations transmises soient utilisées pour être recontacté au sujet de ma demande, conformément à la <a href="https://rcpilotage.fr/mentions-légaux.html">politique de confidentialité</a>.</span>
         </label>
 
         <button class="btn btn-solid" type="submit">Envoyer ma demande
@@ -1112,7 +1114,7 @@ body.loaded .trace-pt{opacity:1}
 
     <div class="foot">
       <span>© 2026 R&amp;C Pilotage · Conseil opérationnel en restauration</span>
-      <span><a href="https://rcpilotage.fr/mentions-legales.html">Mentions légales</a> · Alsace, France</span>
+      <span><a href="https://rcpilotage.fr/mentions-légaux.html">Mentions légales</a> · Alsace, France</span>
     </div>
   </div>
 </footer>
